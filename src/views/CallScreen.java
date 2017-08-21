@@ -27,7 +27,7 @@ public class CallScreen extends javax.swing.JFrame {
         // Instancias
         Date hora = new Date();
     
-    //	Variables
+    //Variables
 	private Timer cronometro;
 	int seg,hor,min;
 	boolean[] press = new boolean[5];
