@@ -28,7 +28,6 @@ public class CallScreen extends javax.swing.JFrame {
         Date hora = new Date();
     
     // Variables
-//        Esto es un ejemplo para que me muestre lo que se agregó
 	private Timer cronometro;
 	int seg,hor,min;
 	boolean[] press = new boolean[5];
