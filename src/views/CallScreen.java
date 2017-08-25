@@ -9,9 +9,17 @@ import java.awt.Toolkit;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Timer;
 import javax.swing.*;
 
@@ -29,14 +37,17 @@ public class CallScreen extends javax.swing.JFrame {
     
     // Variables
 	private Timer cronometro;
-	int seg,hor,min;
+	int seg,hor,min, random;
 	boolean[] press = new boolean[5];
 	int[] botones = new int[3];
-
+        Random randomGenerator = new Random();
+//        disposalScreenn ds = new disposalScreenn();
+        disposalScreen dn = new disposalScreen(this, true);
+        
     
     public CallScreen() {
         Date hora = new Date();
-        this.setUndecorated(false);
+//        this.setUndecorated(false);
         this.setAlwaysOnTop(true);
         this.setResizable(false);
         this.setVisible(true);
@@ -45,6 +56,7 @@ public class CallScreen extends javax.swing.JFrame {
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight();
         this.setSize(xsize, ysize);
+        disposalScreen ds = new disposalScreen(this, true);
         
     }
 
@@ -61,12 +73,12 @@ public class CallScreen extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        status = new javax.swing.JLabel();
         jRadioButton1 = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        recordindfile = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        recordid = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -89,13 +101,18 @@ public class CallScreen extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
+        manageClient = new javax.swing.JButton();
         Current_time_hour = new javax.swing.JLabel();
         Current_time_min = new javax.swing.JLabel();
         Current_time_seg = new javax.swing.JLabel();
         Channel_of_call = new javax.swing.JLabel();
         Timer = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
+        Current_time_hours = new javax.swing.JLabel();
+        Current_time_mins = new javax.swing.JLabel();
+        Current_time_segs = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -111,8 +128,8 @@ public class CallScreen extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
         jLabel6.setText("STATUS: ");
 
-        jLabel7.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
-        jLabel7.setText(".");
+        status.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
+        status.setText(".");
 
         jRadioButton1.setText("ALT PHONE DIAL");
         jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -121,13 +138,9 @@ public class CallScreen extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setText("RECORDING FILE:");
-
-        jLabel9.setText(".");
+        jLabel8.setText("LOGGED IN AS USER:");
 
         jLabel10.setText("RECORD ID:");
-
-        jLabel11.setText(".");
 
         jButton1.setText("START RECORDING");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -194,16 +207,28 @@ public class CallScreen extends javax.swing.JFrame {
         jButton10.setText("X ACTIVE CALLBACKS");
         jButton10.setBorder(null);
 
-        jButton11.setText("MANAGE CLIENT");
+        manageClient.setText("MANAGE CLIENT");
+        manageClient.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                manageClientActionPerformed(evt);
+            }
+        });
 
         Current_time_hour.setName("Current_time_hour"); // NOI18N
 
-        Channel_of_call.setText("jLabel16");
-
         Timer.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
-        Timer.setText("jLabel3");
 
         jLabel16.setText("TIME:");
+
+        Current_time_hours.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
+
+        Current_time_mins.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
+
+        Current_time_segs.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
+
+        jLabel3.setText(":");
+
+        jLabel4.setText(":");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -217,16 +242,16 @@ public class CallScreen extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel9))
+                                .addComponent(recordindfile))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel11))
+                                .addComponent(recordid))
                             .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7)
+                                .addComponent(status)
                                 .addGap(429, 429, 429)
                                 .addComponent(jLabel13))
                             .addGroup(layout.createSequentialGroup()
@@ -235,8 +260,8 @@ public class CallScreen extends javax.swing.JFrame {
                                         .addComponent(jButton6, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(237, 237, 237)
+                                    .addComponent(manageClient, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(154, 154, 154)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,7 +277,7 @@ public class CallScreen extends javax.swing.JFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(417, 417, 417)
                                         .addComponent(jButton7)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 386, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButton1)
@@ -283,16 +308,25 @@ public class CallScreen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(404, 404, 404)
-                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(65, 65, 65)
                         .addComponent(jLabel2)
-                        .addGap(56, 56, 56)
-                        .addComponent(Current_time_hour)
-                        .addGap(76, 76, 76)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Current_time_hours)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(Current_time_hour))
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Current_time_mins)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(Current_time_segs)
+                        .addGap(34, 34, 34)
                         .addComponent(Current_time_min)
                         .addGap(25, 25, 25)
                         .addComponent(Current_time_seg)
@@ -304,6 +338,11 @@ public class CallScreen extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel12)
+                .addGap(348, 348, 348)
+                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -319,11 +358,16 @@ public class CallScreen extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addComponent(Current_time_hour)
                         .addComponent(Current_time_min)
-                        .addComponent(Current_time_seg)))
+                        .addComponent(Current_time_seg)
+                        .addComponent(Current_time_hours)
+                        .addComponent(Current_time_mins)
+                        .addComponent(Current_time_segs)
+                        .addComponent(jLabel3)
+                        .addComponent(jLabel4)))
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jLabel7)
+                    .addComponent(status)
                     .addComponent(jLabel13))
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -336,11 +380,11 @@ public class CallScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9))
+                    .addComponent(recordindfile))
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jLabel11))
+                    .addComponent(recordid))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -366,10 +410,10 @@ public class CallScreen extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton8)
                             .addComponent(jButton9))
-                        .addGap(40, 40, 40)
+                        .addGap(37, 37, 37)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
-                        .addComponent(jButton10)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
@@ -378,12 +422,12 @@ public class CallScreen extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5)
-                        .addGap(50, 50, 50)
+                        .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jButton6)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton11)
+                        .addComponent(manageClient)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel12))))
         );
@@ -397,8 +441,10 @@ public class CallScreen extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         jButton5.setBackground(Color.LIGHT_GRAY);
+        activeButtons();
         cronometro.stop();
-        
+        status.setText("PAUSED");
+        dn.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
     
     public class tiempo implements ActionListener
@@ -426,18 +472,72 @@ public class CallScreen extends javax.swing.JFrame {
             	}
                 
                 Timer.setText("   	"+hor+":"+min+":"+seg);
-        	Current_time_hour.setText(String.valueOf(hor1));
-                Current_time_min.setText(String.valueOf(min1));
-                Current_time_seg.setText(String.valueOf(seg1));
-                Channel_of_call.setText("CLARO-DOMINICAN-PRIVILEGE");}
+        	Current_time_hours.setText(String.valueOf(hor1));
+                Current_time_mins.setText(String.valueOf(min1));
+                Current_time_segs.setText(String.valueOf(seg1));
+                
+                }
     }
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        cronometro = new Timer(1000, new tiempo());
-        jButton5.setBackground(Color.red);
+    
+    public int randomNumbers(int max, int min){
+        int randomInt = (max - min) + min;
+        randomInt = (int) (Math.random() * randomInt) + min;
+        return randomInt;
+    }
+    
+    public void voipChannel(int max, int min){
+        
+        int randomInt = randomNumbers(max, min);
+        switch (randomInt) {
+            case 1:
+                Channel_of_call.setText("CLARO-DOMINICAN-PRIVILEGE");
+                break;
+            case 2:
+                Channel_of_call.setText("ORANGE-DOMINICAN-PRIVILEGE");
+                break;
+            case 3:
+                Channel_of_call.setText("VIVA-DOMINICAN-PRIVILEGE");
+                break;
+        }
+    }
+    
+    public void randomFileAndId(){
+        int[] randomInt = new int[2];
+        randomInt[0] = randomNumbers(1000, 1);
+        randomInt[1] = randomNumbers(10000, 1);
+        status.setText("ACTIVE");
+//        recordindfile.setText(String.valueOf(randomInt[0]));
+        recordid.setText(String.valueOf(randomInt[1]));
+    }
+    
+    public void disableButtons(){
+        jButton8.setEnabled(false);
+        jButton7.setEnabled(false);
+        jButton9.setEnabled(false);
+        manageClient.setEnabled(false);
+    }
+    
+    public void activeButtons(){
+        jButton8.setEnabled(true);
+        jButton7.setEnabled(true);
+        jButton9.setEnabled(true);
+        manageClient.setEnabled(true);
+    }
+    
+    public void resetTimer(){
         hor = 0;
         min =0;
         seg =0;
         Timer.setText("   	"+hor+":"+min+":"+seg);
+    }
+    
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        cronometro = new Timer(1000, new tiempo());
+        jButton5.setBackground(Color.red);
+        resetTimer();
+        voipChannel(3, 1);
+        randomFileAndId();
+        disableButtons();
         cronometro.start();
         
     }//GEN-LAST:event_jButton8ActionPerformed
@@ -445,20 +545,20 @@ public class CallScreen extends javax.swing.JFrame {
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         cronometro = new Timer(1000, new tiempo());
         jButton5.setBackground(Color.red);
-        hor = 0;
-        min =0;
-        seg =0;
-        Timer.setText("   	"+hor+":"+min+":"+seg);
+        resetTimer();
+        voipChannel(3, 1);
+        randomFileAndId();
+        disableButtons();
         cronometro.start();
     }//GEN-LAST:event_jButton7ActionPerformed
 
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         cronometro = new Timer(1000, new tiempo());
         jButton5.setBackground(Color.red);
-        hor = 0;
-        min =0;
-        seg =0;
-        Timer.setText("   	"+hor+":"+min+":"+seg);
+        resetTimer();
+        voipChannel(3, 1);
+        randomFileAndId();
+        disableButtons();
         cronometro.start();
     }//GEN-LAST:event_jButton9ActionPerformed
 
@@ -469,6 +569,17 @@ public class CallScreen extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void manageClientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manageClientActionPerformed
+            try {
+                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+                System.out.println("Conexion creada!");
+                Statement st = conn.createStatement();
+//                ResultSet rs = st.executeQuery();
+            } catch (SQLException ex) {
+                Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_manageClientActionPerformed
 
     /**
      * @param args the command line arguments
@@ -508,12 +619,14 @@ public class CallScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Channel_of_call;
     private javax.swing.JLabel Current_time_hour;
+    private javax.swing.JLabel Current_time_hours;
     private javax.swing.JLabel Current_time_min;
+    private javax.swing.JLabel Current_time_mins;
     private javax.swing.JLabel Current_time_seg;
+    private javax.swing.JLabel Current_time_segs;
     private javax.swing.JLabel Timer;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
@@ -524,18 +637,17 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
@@ -545,5 +657,9 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
+    private javax.swing.JButton manageClient;
+    private javax.swing.JLabel recordid;
+    private javax.swing.JLabel recordindfile;
+    private javax.swing.JLabel status;
     // End of variables declaration//GEN-END:variables
 }
