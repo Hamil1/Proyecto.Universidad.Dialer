@@ -38,7 +38,7 @@ public class CallScreen extends javax.swing.JFrame {
         Date hora = new Date();
     
     // Variables e instancias
-        Login login = new Login(this, true);
+        Login login = new Login();
         String usuari;
         private Timer cronometro;
 	int seg,hor,min, random;
@@ -68,7 +68,7 @@ public class CallScreen extends javax.swing.JFrame {
         this.setVisible(true);
         setLocationRelativeTo(null);
         initComponents();
-        usuari =  login.obtenerUsuario();
+//        usuari =  login.obtenerUsuario();
         usuarioLabel.setText(usuari);
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
@@ -689,7 +689,7 @@ public class CallScreen extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
