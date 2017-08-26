@@ -37,6 +37,7 @@ public class manageClients extends javax.swing.JDialog {
         tabla.setModel(md);
         setLocationRelativeTo(null);
         id.enable(false);
+        nombre.requestFocus();
         try {
                 Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
                 String query = "SELECT id, nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
@@ -72,7 +73,7 @@ public class manageClients extends javax.swing.JDialog {
         tabla = new javax.swing.JTable();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        buscarNombre = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
@@ -93,6 +94,8 @@ public class manageClients extends javax.swing.JDialog {
         telefono1 = new javax.swing.JTextField();
         telefono2 = new javax.swing.JTextField();
         telefono3 = new javax.swing.JTextField();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -122,6 +125,8 @@ public class manageClients extends javax.swing.JDialog {
 
         jButton1.setText("Buscar");
 
+        jButton2.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/remove.png")); // NOI18N
+        jButton2.setMnemonic('l');
         jButton2.setText("Eliminar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -129,7 +134,14 @@ public class manageClients extends javax.swing.JDialog {
             }
         });
 
+        jButton3.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/update.png")); // NOI18N
+        jButton3.setMnemonic('m');
         jButton3.setText("Modificar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
         jLabel3.setText("Nombre");
@@ -142,6 +154,12 @@ public class manageClients extends javax.swing.JDialog {
 
         jLabel6.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
         jLabel6.setText("Ciudad");
+
+        nombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nombreActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
         jLabel7.setText("ID");
@@ -161,18 +179,30 @@ public class manageClients extends javax.swing.JDialog {
         jLabel10.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
         jLabel10.setText("Telefono 3");
 
+        jButton4.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/refresh.png")); // NOI18N
+        jButton4.setMnemonic('r');
+        jButton4.setText("Refrescar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jButton5.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/add.png")); // NOI18N
+        jButton5.setMnemonic('c');
+        jButton5.setText("Crear");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton3))
-                    .addComponent(jLabel10))
+                .addComponent(jLabel9)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -216,10 +246,22 @@ public class manageClients extends javax.swing.JDialog {
                         .addGap(21, 21, 21)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buscarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton3)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -227,7 +269,7 @@ public class manageClients extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(buscarNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton1)
                         .addComponent(jLabel2))
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,7 +314,9 @@ public class manageClients extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton2)
-                    .addComponent(jButton3)))
+                    .addComponent(jButton3)
+                    .addComponent(jButton4)
+                    .addComponent(jButton5)))
         );
 
         pack();
@@ -291,7 +335,7 @@ public class manageClients extends javax.swing.JDialog {
             PreparedStatement ps = conn.prepareStatement(query);
             ps.setString(1, id.getText());
             ps.executeUpdate();
-            
+            JOptionPane.showMessageDialog(null, "Eliminado!");
             //st.executeUpdate("DELETE FROM clients where ")
         } catch (SQLException ex) {
             Logger.getLogger(manageClients.class.getName()).log(Level.SEVERE, null, ex);
@@ -319,6 +363,106 @@ public class manageClients extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_idActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        Connection conn;
+        try {
+            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+            System.out.println("Conexion creada!");
+            Statement st = conn.createStatement();
+            int fila = tabla.getSelectedRow();
+            DefaultTableModel model = (DefaultTableModel) tabla.getModel();
+            model.removeRow(fila);
+            String query = "UPDATE clients SET nombre = ?, apellido = ?, address = ?, ciudad = ?, telefono1 = ?, telefono2 = ?, telefono3 = ?"
+                    + " WHERE id = ?";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, nombre.getText());
+            ps.setString(2, apellido.getText());
+            ps.setString(3, direccion.getText());
+            ps.setString(4, ciudad.getText());
+            ps.setString(5, telefono1.getText());
+            ps.setString(6, telefono2.getText());
+            ps.setString(7, telefono3.getText());
+            ps.setString(8, id.getText());
+            ps.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Modificado!");
+            model.fireTableDataChanged();
+            
+            //st.executeUpdate("DELETE FROM clients where ")
+        } catch (SQLException ex) {
+            Logger.getLogger(manageClients.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        DefaultTableModel md;
+        String data[][] = {};
+        String cabeza[] = {"Id", "Nombres","Apellidos","Dirección","Ciudad","Telefono 1","Telefono 2","Telefono 3"};
+        md = new DefaultTableModel(data, cabeza);
+        tabla.setModel(md);
+        try {
+                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+                String query = "SELECT id, nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
+                System.out.println("Conexion creada!");
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(query);
+                ResultSetMetaData rsMd = rs.getMetaData();
+                int numerocolumnas = rsMd.getColumnCount();
+                while(rs.next()){
+                    Object [] fila = new Object [numerocolumnas];
+                    for (int i = 0; i < numerocolumnas; i++){
+                        fila [i] = rs.getObject(i + 1);
+                    }
+                    md.addRow(fila);
+                }
+                limpiar();
+                nombre.requestFocus();
+            } catch (SQLException ex) {
+                Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.print("Conexion fallida");
+            }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+            Connection conn;
+        try {
+            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+            System.out.println("Conexion creada!");
+            Statement st = conn.createStatement();
+            String query = "INSERT INTO clients (nombre, apellido, address, ciudad, telefono1, telefono2, telefono3)"
+                    + "VALUES (?,?,?,?,?,?,?)";
+            PreparedStatement ps = conn.prepareStatement(query);
+            ps.setString(1, nombre.getText());
+            ps.setString(2, apellido.getText());
+            ps.setString(3, direccion.getText());
+            ps.setString(4, ciudad.getText());
+            ps.setString(5, telefono1.getText());
+            ps.setString(6, telefono2.getText());
+            ps.setString(7, telefono3.getText());
+            ps.executeUpdate();
+            System.out.print("Insert exitoso!");
+            JOptionPane.showMessageDialog(null, "Creado!");
+        } catch (SQLException ex) {
+            Logger.getLogger(manageClients.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.print("Conexion fallida");
+            ex.printStackTrace();
+        }
+            
+            
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_nombreActionPerformed
+
+    public void limpiar(){
+        nombre.setText("");
+        apellido.setText("");
+        direccion.setText("");
+        ciudad.setText("");
+        telefono1.setText("");
+        telefono2.setText("");
+        telefono3.setText("");
+    }
     /**
      * @param args the command line arguments
      */
@@ -363,12 +507,15 @@ public class manageClients extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField apellido;
+    private javax.swing.JTextField buscarNombre;
     private javax.swing.JTextField ciudad;
     private javax.swing.JTextField direccion;
     private javax.swing.JTextField id;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -381,7 +528,6 @@ public class manageClients extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField nombre;
     private javax.swing.JTable tabla;
     private javax.swing.JTextField telefono1;
