@@ -14,9 +14,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,14 +37,27 @@ public class CallScreen extends javax.swing.JFrame {
         // Instancias
         Date hora = new Date();
     
-    // Variables
-	private Timer cronometro;
+    // Variables e instancias
+        Login login = new Login(this, true);
+        String usuari;
+        private Timer cronometro;
 	int seg,hor,min, random;
 	boolean[] press = new boolean[5];
 	int[] botones = new int[3];
         Random randomGenerator = new Random();
 //        disposalScreenn ds = new disposalScreenn();
         disposalScreen dn = new disposalScreen(this, true);
+        int conteo = 0;
+        ArrayList<String> nombresDB = new ArrayList<String>();
+        ArrayList<String> apellidosDB = new ArrayList<String>();
+        ArrayList<String> telefono1DB = new ArrayList<String>();
+        ArrayList<String> telefono2DB = new ArrayList<String>();
+        ArrayList<String> telefono3DB = new ArrayList<String>();
+        Iterator iterNombre;
+        Iterator iterApellido;
+        Iterator iterTelefono1;
+        Iterator iterTelefono2;
+        Iterator iterTelefono3;
         
     
     public CallScreen() {
@@ -51,13 +66,49 @@ public class CallScreen extends javax.swing.JFrame {
         this.setAlwaysOnTop(true);
         this.setResizable(true);
         this.setVisible(true);
+        setLocationRelativeTo(null);
         initComponents();
+        usuari =  login.obtenerUsuario();
+        usuarioLabel.setText(usuari);
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight();
-        this.setSize(xsize, ysize);
-        disposalScreen ds = new disposalScreen(this, true);
         
+//        this.setSize(xsize, ysize);
+//        disposalScreen ds = new disposalScreen(this, true);
+        
+        //Obtener registros
+        try {
+                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+                String query = "SELECT nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
+                System.out.println("Conexion creada!");
+                Statement st = conn.createStatement();
+                ResultSet rs = st.executeQuery(query);
+                int i = 0;
+                
+                while(rs.next()){
+                nombresDB.add(rs.getString("nombre"));
+                apellidosDB.add(rs.getString("apellido"));
+                telefono1DB.add(rs.getString("telefono1"));
+                telefono2DB.add(rs.getString("telefono2"));
+                telefono3DB.add(rs.getString("telefono3"));
+                }
+                
+            } catch (SQLException ex) {
+                Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.print("Conexion fallida");
+            }
+                iterNombre = nombresDB.iterator();
+                iterApellido = apellidosDB.iterator();
+                iterTelefono1 = telefono1DB.iterator();
+                iterTelefono2 = telefono2DB.iterator();
+                iterTelefono3 = telefono3DB.iterator();
+                nombre.setText((String) iterNombre.next());
+                apellido.setText((String) iterApellido.next());
+                phone1.setText((String) iterTelefono1.next());
+                phone2.setText((String) iterTelefono2.next());
+                phone3.setText((String) iterTelefono3.next());
+                
     }
 
     /**
@@ -87,18 +138,18 @@ public class CallScreen extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        nombre = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        apellido = new javax.swing.JTextField();
+        phone2 = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
-        jTextField5 = new javax.swing.JTextField();
+        phone1 = new javax.swing.JTextField();
         jButton8 = new javax.swing.JButton();
-        jTextField6 = new javax.swing.JTextField();
+        phone3 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton10 = new javax.swing.JButton();
+        viewCallBacks = new javax.swing.JButton();
         manageClient = new javax.swing.JButton();
         Current_time_hour = new javax.swing.JLabel();
         Current_time_min = new javax.swing.JLabel();
@@ -111,8 +162,9 @@ public class CallScreen extends javax.swing.JFrame {
         Current_time_segs = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
+        addCallBack = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        usuarioLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -203,9 +255,9 @@ public class CallScreen extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        jButton10.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/view.png")); // NOI18N
-        jButton10.setText("VIEW CALLBACKS");
-        jButton10.setBorder(null);
+        viewCallBacks.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/view.png")); // NOI18N
+        viewCallBacks.setText("VIEW CALLBACKS");
+        viewCallBacks.setBorder(null);
 
         manageClient.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/view.png")); // NOI18N
         manageClient.setText("MANAGE CLIENT");
@@ -231,27 +283,66 @@ public class CallScreen extends javax.swing.JFrame {
 
         jLabel4.setText(":");
 
-        jButton11.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/add.png")); // NOI18N
-        jButton11.setText("ADD CLIENT");
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
+        addCallBack.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/add.png")); // NOI18N
+        addCallBack.setText("ADD CALLBACK");
+        addCallBack.setBorder(null);
+        addCallBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
+                addCallBackActionPerformed(evt);
             }
         });
 
-        jButton12.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/add.png")); // NOI18N
-        jButton12.setText("ADD CALLBACK");
-        jButton12.setBorder(null);
-        jButton12.addActionListener(new java.awt.event.ActionListener() {
+        jButton6.setText("Siguiente >");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton12ActionPerformed(evt);
+                jButton6ActionPerformed(evt);
             }
         });
+
+        usuarioLabel.setText("jLabel7");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel12)
+                        .addGap(487, 487, 487))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(addCallBack, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(65, 65, 65)))
+                .addComponent(viewCallBacks, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addGap(65, 65, 65)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Current_time_hours)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(Current_time_hour))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Current_time_mins)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Current_time_segs)
+                .addGap(34, 34, 34)
+                .addComponent(Current_time_min)
+                .addGap(25, 25, 25)
+                .addComponent(Current_time_seg)
+                .addGap(260, 260, 260)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Channel_of_call)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +351,9 @@ public class CallScreen extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(recordindfile))
+                                .addComponent(recordindfile)
+                                .addGap(18, 18, 18)
+                                .addComponent(usuarioLabel))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -273,9 +366,7 @@ public class CallScreen extends javax.swing.JFrame {
                                 .addGap(429, 429, 429)
                                 .addComponent(jLabel13))
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(manageClient, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jButton11))
+                                .addComponent(manageClient, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(218, 218, 218)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -291,7 +382,7 @@ public class CallScreen extends javax.swing.JFrame {
                                         .addComponent(jButton7))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(387, 387, 387)
-                                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addComponent(phone2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 282, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -302,67 +393,34 @@ public class CallScreen extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel14)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(44, 44, 44)
                                 .addComponent(jLabel15)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(271, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(271, 271, 271))))
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(phone3, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(253, 253, 253))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(162, 162, 162)
-                        .addComponent(jButton8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton9)
-                        .addGap(314, 314, 314))))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel12)
-                        .addGap(487, 487, 487))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65)))
-                .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(65, 65, 65)
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Current_time_hours)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(Current_time_hour))
+                                .addGap(162, 162, 162)
+                                .addComponent(phone1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Current_time_mins)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Current_time_segs)
-                        .addGap(34, 34, 34)
-                        .addComponent(Current_time_min)
-                        .addGap(25, 25, 25)
-                        .addComponent(Current_time_seg)
-                        .addGap(260, 260, 260)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(Channel_of_call))
+                                .addGap(197, 197, 197)
+                                .addComponent(jButton8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton9)
+                                .addGap(296, 296, 296))))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6)
+                        .addGap(123, 123, 123))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -394,15 +452,16 @@ public class CallScreen extends javax.swing.JFrame {
                     .addComponent(jRadioButton1)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel15)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(recordindfile))
+                            .addComponent(recordindfile)
+                            .addComponent(usuarioLabel))
                         .addGap(17, 17, 17)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
@@ -410,7 +469,7 @@ public class CallScreen extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(phone2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jButton7))
                             .addGroup(layout.createSequentialGroup()
@@ -425,24 +484,28 @@ public class CallScreen extends javax.swing.JFrame {
                         .addGap(75, 75, 75)
                         .addComponent(jButton4)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton5))
+                        .addComponent(jButton5)
+                        .addGap(0, 3, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(228, 228, 228)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton8)
-                            .addComponent(jButton9))
-                        .addGap(5, 5, 5)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(phone1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(phone3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(8, 8, 8)
+                        .addComponent(jButton8)
+                        .addGap(9, 9, 9))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton6)
+                        .addGap(129, 129, 129)
+                        .addComponent(jButton9)
+                        .addGap(6, 6, 6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton11)
-                        .addGap(18, 18, 18)
+                        .addGap(49, 49, 49)
                         .addComponent(manageClient)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel12))
@@ -450,8 +513,8 @@ public class CallScreen extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(viewCallBacks, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(addCallBack, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
         );
 
@@ -538,6 +601,8 @@ public class CallScreen extends javax.swing.JFrame {
         jButton7.setEnabled(false);
         jButton9.setEnabled(false);
         manageClient.setEnabled(false);
+        addCallBack.setEnabled(false);
+        viewCallBacks.setEnabled(false);
     }
     
     public void activeButtons(){
@@ -545,6 +610,8 @@ public class CallScreen extends javax.swing.JFrame {
         jButton7.setEnabled(true);
         jButton9.setEnabled(true);
         manageClient.setEnabled(true);
+        addCallBack.setEnabled(true);
+        viewCallBacks.setEnabled(true);
     }
     
     public void resetTimer(){
@@ -598,15 +665,18 @@ public class CallScreen extends javax.swing.JFrame {
         ms.setVisible(true);
     }//GEN-LAST:event_manageClientActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        addClients add = new addClients(this, true);
-        add.setVisible(true);
-    }//GEN-LAST:event_jButton11ActionPerformed
-
-    private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
+    private void addCallBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCallBackActionPerformed
         addCallBack addc = new addCallBack(this, true);
         addc.setVisible(true);
-    }//GEN-LAST:event_jButton12ActionPerformed
+    }//GEN-LAST:event_addCallBackActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        nombre.setText((String) iterNombre.next());
+        apellido.setText((String) iterApellido.next());
+        phone1.setText((String) iterTelefono1.next());
+        phone2.setText((String) iterTelefono2.next());
+        phone3.setText((String) iterTelefono3.next());
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -652,14 +722,14 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JLabel Current_time_seg;
     private javax.swing.JLabel Current_time_segs;
     private javax.swing.JLabel Timer;
+    private javax.swing.JButton addCallBack;
+    private javax.swing.JTextField apellido;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    public javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -679,14 +749,15 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
     private javax.swing.JButton manageClient;
+    private javax.swing.JTextField nombre;
+    private javax.swing.JTextField phone1;
+    private javax.swing.JTextField phone2;
+    private javax.swing.JTextField phone3;
     private javax.swing.JLabel recordid;
     private javax.swing.JLabel recordindfile;
     private javax.swing.JLabel status;
+    private javax.swing.JLabel usuarioLabel;
+    private javax.swing.JButton viewCallBacks;
     // End of variables declaration//GEN-END:variables
 }

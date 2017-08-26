@@ -5,15 +5,23 @@
  */
 package views;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author hamil
  */
 public class Login extends javax.swing.JDialog {
 
-    /**
-     * Creates new form Login
-     */
+    public String user = "";
+    
     public Login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -31,18 +39,18 @@ public class Login extends javax.swing.JDialog {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jPasswordField1 = new javax.swing.JPasswordField();
+        acceder = new javax.swing.JButton();
+        usuario = new javax.swing.JTextField();
+        contrasena = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dialer-icon.png"))); // NOI18N
 
-        jButton1.setText("Acceder");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        acceder.setText("Acceder");
+        acceder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                accederActionPerformed(evt);
             }
         });
 
@@ -53,13 +61,13 @@ public class Login extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
                 .addContainerGap(45, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
+                .addComponent(acceder)
                 .addGap(75, 75, 75))
         );
         layout.setVerticalGroup(
@@ -68,24 +76,51 @@ public class Login extends javax.swing.JDialog {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16)
-                .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(contrasena, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1)
+                .addComponent(acceder)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        CallScreen cs = new CallScreen();
-        cs.setVisible(true);
-        this.dispose();
+    private void accederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_accederActionPerformed
+                Connection conn = null;
+                String usua = "";
+                String usu = usuario.getText();
+                String pas = new String(contrasena.getPassword());
+        try {
+            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+            String query = "SELECT nombre, contrasena FROM users WHERE nombre = '"+usu+"' and contrasena = '"+pas+"'";
+            System.out.println("Conexion creada!");
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query);
+            
+            if(rs.next()){
+                JOptionPane.showMessageDialog(null,"Bienvenido " + usu);
+                CallScreen cs = new CallScreen();
+                cs.setVisible(true);
+                this.dispose();
+                
+            }else{
+                JOptionPane.showMessageDialog(null,"Los datos son incorrectos.");
+                usuario.requestFocus();
+                usuario.setText("");
+                contrasena.setText("");
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Problemas con la conexión");
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_accederActionPerformed
 
+    public String obtenerUsuario(){
+        return usuario.getText();
+    }
     /**
      * @param args the command line arguments
      */
@@ -129,9 +164,9 @@ public class Login extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton acceder;
+    private javax.swing.JPasswordField contrasena;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPasswordField jPasswordField1;
-    private javax.swing.JTextField jTextField1;
+    public javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }
