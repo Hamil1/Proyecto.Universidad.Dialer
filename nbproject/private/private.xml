@@ -4,8 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/views/CallScreen.java</file>
-            <file>file:/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/views/Diseño_de_sistemas.java</file>
+            <file>file:/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/views/manageClients.java</file>
             <file>file:/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/views/Login.java</file>
+            <file>file:/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/views/addClients.java</file>
+            <file>file:/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/model/model.java</file>
         </group>
     </open-files>
 </project-private>
