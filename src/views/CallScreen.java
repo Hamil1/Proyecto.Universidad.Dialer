@@ -79,7 +79,7 @@ public class CallScreen extends javax.swing.JFrame {
         
         //Obtener registros
         try {
-                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dialer", "postgres", "");
                 String query = "SELECT nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
                 System.out.println("Conexion creada!");
                 Statement st = conn.createStatement();

@@ -129,10 +129,7 @@ public class addClients extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Connection conn = null;
         try {
-            String url = "jdbc:derby://localhost:1527/dialer";
-            String user = "administrador";
-            String password = "administrador";
-            conn = DriverManager.getConnection(url,user,password);
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dialer", "postgres", "");
             
                 
                 PreparedStatement st = conn.prepareStatement("INSERT INTO clients (nombre, apellido, address, ciudad) VALUES(?,?,?,?)");

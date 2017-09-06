@@ -39,7 +39,7 @@ public class manageClients extends javax.swing.JDialog {
         id.enable(false);
         nombre.requestFocus();
         try {
-                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dialer", "postgres", "");
                 String query = "SELECT id, nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
                 System.out.println("Conexion creada!");
                 Statement st = conn.createStatement();
@@ -325,7 +325,7 @@ public class manageClients extends javax.swing.JDialog {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dialer", "postgres", "");
             System.out.println("Conexion creada!");
             Statement st = conn.createStatement();
             int fila = tabla.getSelectedRow();
@@ -366,7 +366,7 @@ public class manageClients extends javax.swing.JDialog {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dialer", "postgres", "");
             System.out.println("Conexion creada!");
             Statement st = conn.createStatement();
             int fila = tabla.getSelectedRow();
@@ -400,7 +400,7 @@ public class manageClients extends javax.swing.JDialog {
         md = new DefaultTableModel(data, cabeza);
         tabla.setModel(md);
         try {
-                Connection conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+                Connection conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dialer", "postgres", "");
                 String query = "SELECT id, nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
                 System.out.println("Conexion creada!");
                 Statement st = conn.createStatement();
@@ -425,7 +425,7 @@ public class manageClients extends javax.swing.JDialog {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
             Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dialer", "postgres", "");
             System.out.println("Conexion creada!");
             Statement st = conn.createStatement();
             String query = "INSERT INTO clients (nombre, apellido, address, ciudad, telefono1, telefono2, telefono3)"
