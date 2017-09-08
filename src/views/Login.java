@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.sqlite.JDBC;
 /**
  *
  * @author hamil
@@ -93,7 +94,7 @@ public class Login extends javax.swing.JFrame {
         String usu = usuario.getText();
         String pas = new String(contrasena.getPassword());
         try {
-            conn = DriverManager.getConnection("jdbc:derby://localhost:1527/dialer", "administrador", "administrador");
+            conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
             String query = "SELECT nombre, contrasena FROM users WHERE nombre = '"+usu+"' and contrasena = '"+pas+"'";
             System.out.println("Conexion creada!");
             Statement st = conn.createStatement();

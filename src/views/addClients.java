@@ -129,7 +129,7 @@ public class addClients extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dialer", "postgres", "");
+            conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
             
                 
                 PreparedStatement st = conn.prepareStatement("INSERT INTO clients (nombre, apellido, address, ciudad) VALUES(?,?,?,?)");
