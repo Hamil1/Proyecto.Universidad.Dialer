@@ -170,7 +170,7 @@ public class CallScreen extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 3, 36)); // NOI18N
-        jLabel1.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/dialer-icon.png")); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dialer-icon.png"))); // NOI18N
         jLabel1.setText("Dialer");
 
         jLabel2.setText("CUSTORMER TIME:");
@@ -194,7 +194,7 @@ public class CallScreen extends javax.swing.JFrame {
 
         jLabel10.setText("RECORD ID:");
 
-        jButton1.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/microphone.png")); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/microphone.png"))); // NOI18N
         jButton1.setText("START RECORDING");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -213,6 +213,7 @@ public class CallScreen extends javax.swing.JFrame {
 
         jButton4.setText("TRANSFER - CONF");
 
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/phone-call.png"))); // NOI18N
         jButton5.setText("HANGUP CUSTOMER");
         jButton5.setName("hang"); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -255,11 +256,10 @@ public class CallScreen extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        viewCallBacks.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/view.png")); // NOI18N
         viewCallBacks.setText("VIEW CALLBACKS");
         viewCallBacks.setBorder(null);
 
-        manageClient.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/view.png")); // NOI18N
+        manageClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/manage_clients.png"))); // NOI18N
         manageClient.setText("MANAGE CLIENT");
         manageClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,7 +283,6 @@ public class CallScreen extends javax.swing.JFrame {
 
         jLabel4.setText(":");
 
-        addCallBack.setIcon(new javax.swing.ImageIcon("/home/hamil/NetBeansProjects/Proyecto.Universidad.Dialer/src/images/add.png")); // NOI18N
         addCallBack.setText("ADD CALLBACK");
         addCallBack.setBorder(null);
         addCallBack.addActionListener(new java.awt.event.ActionListener() {
@@ -490,8 +489,8 @@ public class CallScreen extends javax.swing.JFrame {
                         .addGap(228, 228, 228)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(phone1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(phone1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(phone3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(8, 8, 8)
                         .addComponent(jButton8)
