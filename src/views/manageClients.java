@@ -5,6 +5,8 @@
  */
 package views;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,8 +16,10 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -27,13 +31,15 @@ public class manageClients extends javax.swing.JDialog {
     /**
      * Creates new form manageClients
      */
+    TableRowSorter trs;
+    String data[][] = {};
+    String cabeza[] = {"Id", "Nombres","Apellidos","Dirección","Ciudad","Telefono 1","Telefono 2","Telefono 3"};
+    DefaultTableModel md = new DefaultTableModel(data, cabeza);
+    
     public manageClients(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        DefaultTableModel md;
-        String data[][] = {};
-        String cabeza[] = {"Id", "Nombres","Apellidos","Dirección","Ciudad","Telefono 1","Telefono 2","Telefono 3"};
-        md = new DefaultTableModel(data, cabeza);
+        
         tabla.setModel(md);
         setLocationRelativeTo(null);
         id.enable(false);
@@ -115,6 +121,11 @@ public class manageClients extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tabla);
 
         buscarNombre.setName("buscarNombre"); // NOI18N
+        buscarNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                buscarNombreKeyTyped(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/remove.png"))); // NOI18N
         jButton2.setMnemonic('l');
@@ -432,6 +443,21 @@ public class manageClients extends javax.swing.JDialog {
     private void nombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nombreActionPerformed
+
+    private void buscarNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarNombreKeyTyped
+        
+        
+        
+        buscarNombre.addKeyListener(new KeyAdapter() {
+
+            @Override
+            public void keyReleased(KeyEvent ke) {
+                trs.setRowFilter(RowFilter.regexFilter("(?i)"+buscarNombre.getText(), 1));
+            }
+});
+        trs = new TableRowSorter(md);
+        tabla.setRowSorter(trs);
+    }//GEN-LAST:event_buscarNombreKeyTyped
 
     public void limpiar(){
         nombre.setText("");
