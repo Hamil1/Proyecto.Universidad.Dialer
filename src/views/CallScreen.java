@@ -39,7 +39,6 @@ public class CallScreen extends javax.swing.JFrame {
     
     // Variables e instancias
         Login login = new Login();
-        String usuari;
         private Timer cronometro;
 	int seg,hor,min, random;
 	boolean[] press = new boolean[5];
@@ -69,7 +68,7 @@ public class CallScreen extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         initComponents();
 //        usuari =  login.obtenerUsuario();
-        usuarioLabel.setText(usuari);
+        usuarioLabel.setText(login.nameUser);
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight();
@@ -298,7 +297,9 @@ public class CallScreen extends javax.swing.JFrame {
             }
         });
 
-        usuarioLabel.setText("jLabel7");
+        usuarioLabel.setFont(new java.awt.Font("Noto Sans", 3, 14)); // NOI18N
+        usuarioLabel.setText("usuario");
+        usuarioLabel.setName("usuarioLabel"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -351,8 +352,8 @@ public class CallScreen extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(recordindfile)
-                                .addGap(18, 18, 18)
-                                .addComponent(usuarioLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(usuarioLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -484,7 +485,7 @@ public class CallScreen extends javax.swing.JFrame {
                         .addComponent(jButton4)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5)
-                        .addGap(0, 3, Short.MAX_VALUE))
+                        .addGap(0, 2, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(228, 228, 228)
                         .addComponent(jButton3)
@@ -501,7 +502,7 @@ public class CallScreen extends javax.swing.JFrame {
                         .addGap(129, 129, 129)
                         .addComponent(jButton9)
                         .addGap(6, 6, 6)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(49, 49, 49)

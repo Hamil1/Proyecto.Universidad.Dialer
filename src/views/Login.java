@@ -23,10 +23,13 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login1
      */
+    public static String nameUser = "";
+    
     public Login() {
         initComponents();
         setTitle("Login");
     	setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -101,6 +104,7 @@ public class Login extends javax.swing.JFrame {
             ResultSet rs = st.executeQuery(query);
 
             if(rs.next()){
+                nameUser = usuario.getText();
                 JOptionPane.showMessageDialog(null,"Bienvenido " + usu);
                 CallScreen cs = new CallScreen();
                 cs.setVisible(true);
