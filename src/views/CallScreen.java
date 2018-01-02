@@ -73,9 +73,9 @@ public class CallScreen extends javax.swing.JFrame {
         Toolkit tk = Toolkit.getDefaultToolkit();
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight();
-        
+//        Pantalla completa
         this.setSize(xsize, ysize);
-//        disposalScreen ds = new disposalScreen(this, true);
+ //       disposalScreen ds = new disposalScreen(this, true);
         
         //Obtener registros
         try {
