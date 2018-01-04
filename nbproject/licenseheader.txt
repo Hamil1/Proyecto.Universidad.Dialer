@@ -1,0 +1,6 @@
+/* 
+Project: ${project.name}
+Package: ${package}
+File: ${name} 
+Created by Hamil on ${date} - ${time}. 
+*/

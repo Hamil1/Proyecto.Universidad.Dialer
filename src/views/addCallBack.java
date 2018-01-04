@@ -4,17 +4,27 @@
  * and open the template in the editor.
  */
 package views;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import model.model;
 
 /**
  *
  * @author hamil
  */
 public class addCallBack extends javax.swing.JDialog {
-
+    
     /**
      * Creates new form addCallBack
      */
-    public addCallBack(java.awt.Frame parent, boolean modal) {
+        model modelo = new model();
+        private static String descripcion;
+    public addCallBack(java.awt.Frame parent, boolean modal){
         super(parent, modal);
         initComponents();
         setLocationRelativeTo(null);
@@ -31,7 +41,7 @@ public class addCallBack extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        description = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -39,9 +49,10 @@ public class addCallBack extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
         jLabel1.setText("Comentario");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        description.setColumns(20);
+        description.setRows(5);
+        description.setName("description"); // NOI18N
+        jScrollPane1.setViewportView(description);
 
         jButton1.setText("Save");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -86,7 +97,20 @@ public class addCallBack extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        this.dispose();
+        
+        this.descripcion = description.getText();
+            try {
+                modelo.connection(null, null, null);
+                modelo.insertCallBacks(CallScreen.nombreStr,CallScreen.apellidoStr,null,null,CallScreen.telefono1Str,CallScreen.telefono2Str,CallScreen.telefono3Str,this.descripcion);
+            } catch (SQLException ex) {
+                //JOptionPane.showMessageDialog(null, "Error! No se pudo guardar el CallBack (Llamar al administrador).","Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane optionPane = new JOptionPane("Error! No se pudo guardar el CallBack (Llamar al administrador).", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = optionPane.createDialog("Error!");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
+                Logger.getLogger(addCallBack.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
@@ -132,9 +156,9 @@ public class addCallBack extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextArea description;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

@@ -108,6 +108,8 @@ public class Login extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Bienvenido " + usu);
                 CallScreen cs = new CallScreen();
                 cs.setVisible(true);
+                conn.close();
+                System.out.println("Conexion cerrada");
                 this.dispose();
 
             }else{
@@ -120,6 +122,7 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Problemas con la conexión");
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
 
     }//GEN-LAST:event_accederActionPerformed
 

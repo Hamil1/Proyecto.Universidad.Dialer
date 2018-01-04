@@ -57,6 +57,8 @@ public class CallScreen extends javax.swing.JFrame {
         Iterator iterTelefono1;
         Iterator iterTelefono2;
         Iterator iterTelefono3;
+        //Variables para insertarlas en la tabla de CallBacks (cuando se desee guardan un Call Back)
+        public static String nombreStr = null, apellidoStr = null, telefono1Str = null, telefono2Str = null, telefono3Str = null, descriptionStr = null;
         
     
     public CallScreen() {
@@ -73,7 +75,7 @@ public class CallScreen extends javax.swing.JFrame {
         int xsize = (int) tk.getScreenSize().getWidth();
         int ysize = (int) tk.getScreenSize().getHeight();
 //        Pantalla completa
-        this.setSize(xsize, ysize);
+          this.setSize(xsize, ysize);
  //       disposalScreen ds = new disposalScreen(this, true);
         
         //Obtener registros
@@ -108,7 +110,9 @@ public class CallScreen extends javax.swing.JFrame {
                 phone2.setText((String) iterTelefono2.next());
                 phone3.setText((String) iterTelefono3.next());
                 
+                
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -147,7 +151,7 @@ public class CallScreen extends javax.swing.JFrame {
         phone3 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        description = new javax.swing.JTextArea();
         viewCallBacks = new javax.swing.JButton();
         manageClient = new javax.swing.JButton();
         Current_time_hour = new javax.swing.JLabel();
@@ -251,9 +255,9 @@ public class CallScreen extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        description.setColumns(20);
+        description.setRows(5);
+        jScrollPane1.setViewportView(description);
 
         viewCallBacks.setText("VIEW CALLBACKS");
         viewCallBacks.setBorder(null);
@@ -666,6 +670,11 @@ public class CallScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_manageClientActionPerformed
 
     private void addCallBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCallBackActionPerformed
+        nombreStr = nombre.getText();
+        apellidoStr = apellido.getText();
+        telefono1Str = phone1.getText();
+        telefono2Str = phone2.getText();
+        telefono3Str = phone3.getText();
         addCallBack addc = new addCallBack(this, true);
         addc.setVisible(true);
     }//GEN-LAST:event_addCallBackActionPerformed
@@ -724,6 +733,7 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JLabel Timer;
     private javax.swing.JButton addCallBack;
     private javax.swing.JTextField apellido;
+    private javax.swing.JTextArea description;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -748,7 +758,6 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JButton manageClient;
     private javax.swing.JTextField nombre;
     private javax.swing.JTextField phone1;
