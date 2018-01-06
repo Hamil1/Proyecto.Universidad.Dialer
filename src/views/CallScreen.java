@@ -24,6 +24,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Timer;
 import javax.swing.*;
+import model.model;
 
 /**
  *
@@ -36,6 +37,7 @@ public class CallScreen extends javax.swing.JFrame {
      */
         // Instancias
         Date hora = new Date();
+        
     
     // Variables e instancias
         Login login = new Login();
@@ -58,7 +60,8 @@ public class CallScreen extends javax.swing.JFrame {
         Iterator iterTelefono2;
         Iterator iterTelefono3;
         //Variables para insertarlas en la tabla de CallBacks (cuando se desee guardan un Call Back)
-        public static String nombreStr = null, apellidoStr = null, telefono1Str = null, telefono2Str = null, telefono3Str = null, descriptionStr = null;
+        public static String nombreStr = null, apellidoStr = null, telefono1Str = null, telefono2Str = null, telefono3Str = null, descriptionStr = null, anotacionesStr = null;
+        public model modelo;
         
     
     public CallScreen() {
@@ -77,14 +80,13 @@ public class CallScreen extends javax.swing.JFrame {
 //        Pantalla completa
           this.setSize(xsize, ysize);
  //       disposalScreen ds = new disposalScreen(this, true);
-        
+            
+          modelo = new model();
+            
         //Obtener registros
         try {
-                Connection conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
-                String query = "SELECT nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
-                System.out.println("Conexion creada!");
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(query);
+                
+                ResultSet rs = modelo.selectAllClients();
                 int i = 0;
                 
                 while(rs.next()){
@@ -94,10 +96,14 @@ public class CallScreen extends javax.swing.JFrame {
                 telefono2DB.add(rs.getString("telefono2"));
                 telefono3DB.add(rs.getString("telefono3"));
                 }
+//                modelo.closeConnection();
                 
             } catch (SQLException ex) {
                 Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
-                System.out.print("Conexion fallida");
+                JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = optionPane.createDialog("Error!");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
             }
                 iterNombre = nombresDB.iterator();
                 iterApellido = apellidosDB.iterator();
@@ -151,7 +157,7 @@ public class CallScreen extends javax.swing.JFrame {
         phone3 = new javax.swing.JTextField();
         jButton9 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        description = new javax.swing.JTextArea();
+        anotaciones = new javax.swing.JTextArea();
         viewCallBacks = new javax.swing.JButton();
         manageClient = new javax.swing.JButton();
         Current_time_hour = new javax.swing.JLabel();
@@ -255,9 +261,9 @@ public class CallScreen extends javax.swing.JFrame {
             }
         });
 
-        description.setColumns(20);
-        description.setRows(5);
-        jScrollPane1.setViewportView(description);
+        anotaciones.setColumns(20);
+        anotaciones.setRows(5);
+        jScrollPane1.setViewportView(anotaciones);
 
         viewCallBacks.setText("VIEW CALLBACKS");
         viewCallBacks.setBorder(null);
@@ -675,6 +681,7 @@ public class CallScreen extends javax.swing.JFrame {
         telefono1Str = phone1.getText();
         telefono2Str = phone2.getText();
         telefono3Str = phone3.getText();
+        anotacionesStr = anotaciones.getText();
         addCallBack addc = new addCallBack(this, true);
         addc.setVisible(true);
     }//GEN-LAST:event_addCallBackActionPerformed
@@ -685,6 +692,7 @@ public class CallScreen extends javax.swing.JFrame {
         phone1.setText((String) iterTelefono1.next());
         phone2.setText((String) iterTelefono2.next());
         phone3.setText((String) iterTelefono3.next());
+        anotaciones.setText("");
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
@@ -732,8 +740,8 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JLabel Current_time_segs;
     private javax.swing.JLabel Timer;
     private javax.swing.JButton addCallBack;
+    private javax.swing.JTextArea anotaciones;
     private javax.swing.JTextField apellido;
-    private javax.swing.JTextArea description;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

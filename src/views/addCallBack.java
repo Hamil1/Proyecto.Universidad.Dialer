@@ -18,16 +18,15 @@ import model.model;
  * @author hamil
  */
 public class addCallBack extends javax.swing.JDialog {
-    
-    /**
-     * Creates new form addCallBack
-     */
-        model modelo = new model();
+
+        model modelo;
         private static String descripcion;
     public addCallBack(java.awt.Frame parent, boolean modal){
         super(parent, modal);
+        this.modelo = new model();
         initComponents();
         setLocationRelativeTo(null);
+            
     }
 
     /**
@@ -47,7 +46,7 @@ public class addCallBack extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 12)); // NOI18N
-        jLabel1.setText("Comentario");
+        jLabel1.setText("Comments");
 
         description.setColumns(20);
         description.setRows(5);
@@ -100,8 +99,7 @@ public class addCallBack extends javax.swing.JDialog {
         
         this.descripcion = description.getText();
             try {
-                modelo.connection(null, null, null);
-                modelo.insertCallBacks(CallScreen.nombreStr,CallScreen.apellidoStr,null,null,CallScreen.telefono1Str,CallScreen.telefono2Str,CallScreen.telefono3Str,this.descripcion);
+                modelo.insertCallBacks(CallScreen.nombreStr,CallScreen.apellidoStr,null,null,CallScreen.telefono1Str,CallScreen.telefono2Str,CallScreen.telefono3Str,CallScreen.anotacionesStr,this.descripcion);
             } catch (SQLException ex) {
                 //JOptionPane.showMessageDialog(null, "Error! No se pudo guardar el CallBack (Llamar al administrador).","Error", JOptionPane.ERROR_MESSAGE);
                 JOptionPane optionPane = new JOptionPane("Error! No se pudo guardar el CallBack (Llamar al administrador).", JOptionPane.ERROR_MESSAGE);

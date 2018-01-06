@@ -67,7 +67,7 @@
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Noto Sans" size="12" style="1"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Comentario"/>
+        <Property name="text" type="java.lang.String" value="Comments"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">

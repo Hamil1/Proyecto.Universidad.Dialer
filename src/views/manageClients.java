@@ -20,6 +20,7 @@ import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import model.model;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -35,6 +36,7 @@ public class manageClients extends javax.swing.JDialog {
     String data[][] = {};
     String cabeza[] = {"Id", "Nombres","Apellidos","Dirección","Ciudad","Telefono 1","Telefono 2","Telefono 3"};
     DefaultTableModel md = new DefaultTableModel(data, cabeza);
+    model modelo;
     
     public manageClients(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -44,12 +46,9 @@ public class manageClients extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         id.enable(false);
         nombre.requestFocus();
+         modelo = new model();
         try {
-                Connection conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
-                String query = "SELECT id, nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
-                System.out.println("Conexion creada!");
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(query);
+               ResultSet rs = modelo.selectAllClients();
                 ResultSetMetaData rsMd = rs.getMetaData();
                 int numerocolumnas = rsMd.getColumnCount();
                 while(rs.next()){
@@ -59,7 +58,7 @@ public class manageClients extends javax.swing.JDialog {
                     }
                     md.addRow(fila);
                 }
-                
+                modelo.closeConnection();
             } catch (SQLException ex) {
                 Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.print("Conexion fallida");
@@ -313,18 +312,12 @@ public class manageClients extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Connection conn;
+        
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
-            System.out.println("Conexion creada!");
-            Statement st = conn.createStatement();
             int fila = tabla.getSelectedRow();
             DefaultTableModel model = (DefaultTableModel) tabla.getModel();
             model.removeRow(fila);
-            String query = "DELETE FROM clients WHERE id = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, id.getText());
-            ps.executeUpdate();
+            modelo.deleteClient(id.getText());
             JOptionPane.showMessageDialog(null, "Eliminado!");
             //st.executeUpdate("DELETE FROM clients where ")
         } catch (SQLException ex) {
@@ -374,6 +367,7 @@ public class manageClients extends javax.swing.JDialog {
             ps.setString(7, telefono3.getText());
             ps.setString(8, id.getText());
             ps.executeUpdate();
+            conn.close();
             JOptionPane.showMessageDialog(null, "Modificado!");
             model.fireTableDataChanged();
             
@@ -406,6 +400,8 @@ public class manageClients extends javax.swing.JDialog {
                 }
                 limpiar();
                 nombre.requestFocus();
+                conn.close();
+                System.out.println("Conexion Cerrada.");
             } catch (SQLException ex) {
                 Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
                 System.out.print("Conexion fallida");
@@ -430,6 +426,8 @@ public class manageClients extends javax.swing.JDialog {
             ps.setString(7, telefono3.getText());
             ps.executeUpdate();
             System.out.print("Insert exitoso!");
+            conn.close();
+            System.out.println("Conexion cerrada.");
             JOptionPane.showMessageDialog(null, "Creado!");
         } catch (SQLException ex) {
             Logger.getLogger(manageClients.class.getName()).log(Level.SEVERE, null, ex);

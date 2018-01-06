@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.sqlite.JDBC;
+import model.model;
 /**
  *
  * @author hamil
@@ -24,11 +25,12 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login1
      */
     public static String nameUser = "";
-    
+    public model modelo;
     public Login() {
         initComponents();
         setTitle("Login");
     	setLocationRelativeTo(null);
+        modelo = new model();
         
     }
 
@@ -97,19 +99,14 @@ public class Login extends javax.swing.JFrame {
         String usu = usuario.getText();
         String pas = new String(contrasena.getPassword());
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
-            String query = "SELECT nombre, contrasena FROM users WHERE nombre = '"+usu+"' and contrasena = '"+pas+"'";
-            System.out.println("Conexion creada!");
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query);
+            ResultSet rs = modelo.selectUserLogin(usu, pas);
 
             if(rs.next()){
                 nameUser = usuario.getText();
-                JOptionPane.showMessageDialog(null,"Bienvenido " + usu);
+//                JOptionPane.showMessageDialog(null,"Bienvenido " + usu);
                 CallScreen cs = new CallScreen();
                 cs.setVisible(true);
-                conn.close();
-                System.out.println("Conexion cerrada");
+                modelo.closeConnection();
                 this.dispose();
 
             }else{
