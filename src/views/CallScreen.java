@@ -180,7 +180,7 @@ public class CallScreen extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 3, 36)); // NOI18N
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dialer-icon.png"))); // NOI18N
-        jLabel1.setText("Dialer");
+        jLabel1.setText("ViciDial");
 
         jLabel2.setText("CUSTORMER TIME:");
 

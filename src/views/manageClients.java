@@ -15,6 +15,7 @@ import java.sql.Statement;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -120,6 +121,11 @@ public class manageClients extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tabla);
 
         buscarNombre.setName("buscarNombre"); // NOI18N
+        buscarNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buscarNombreActionPerformed(evt);
+            }
+        });
         buscarNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 buscarNombreKeyTyped(evt);
@@ -321,6 +327,11 @@ public class manageClients extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Eliminado!");
             //st.executeUpdate("DELETE FROM clients where ")
         } catch (SQLException ex) {
+            JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Error!");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            System.out.print("Conexion fallida");
             Logger.getLogger(manageClients.class.getName()).log(Level.SEVERE, null, ex);
         }
         
@@ -347,32 +358,23 @@ public class manageClients extends javax.swing.JDialog {
     }//GEN-LAST:event_idActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
-            System.out.println("Conexion creada!");
-            Statement st = conn.createStatement();
+            //Borrando el registro que fue modificado (Si le dan a refrescar pueden ver los cambios).
             int fila = tabla.getSelectedRow();
             DefaultTableModel model = (DefaultTableModel) tabla.getModel();
             model.removeRow(fila);
-            String query = "UPDATE clients SET nombre = ?, apellido = ?, address = ?, ciudad = ?, telefono1 = ?, telefono2 = ?, telefono3 = ?"
-                    + " WHERE id = ?";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, nombre.getText());
-            ps.setString(2, apellido.getText());
-            ps.setString(3, direccion.getText());
-            ps.setString(4, ciudad.getText());
-            ps.setString(5, telefono1.getText());
-            ps.setString(6, telefono2.getText());
-            ps.setString(7, telefono3.getText());
-            ps.setString(8, id.getText());
-            ps.executeUpdate();
-            conn.close();
+            //Llenando el where y haciendo el update
+            String where = "id = '"+id.getText()+"'";
+            modelo.updateClient(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText(), where);
+            //Mensaje de exito.
             JOptionPane.showMessageDialog(null, "Modificado!");
             model.fireTableDataChanged();
-            
-            //st.executeUpdate("DELETE FROM clients where ")
         } catch (SQLException ex) {
+            JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Error!");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            System.out.print("Conexion fallida");
             Logger.getLogger(manageClients.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -384,11 +386,8 @@ public class manageClients extends javax.swing.JDialog {
         md = new DefaultTableModel(data, cabeza);
         tabla.setModel(md);
         try {
-                Connection conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
-                String query = "SELECT id, nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
-                System.out.println("Conexion creada!");
-                Statement st = conn.createStatement();
-                ResultSet rs = st.executeQuery(query);
+                
+                ResultSet rs = modelo.selectAllClients();
                 ResultSetMetaData rsMd = rs.getMetaData();
                 int numerocolumnas = rsMd.getColumnCount();
                 while(rs.next()){
@@ -400,36 +399,26 @@ public class manageClients extends javax.swing.JDialog {
                 }
                 limpiar();
                 nombre.requestFocus();
-                conn.close();
-                System.out.println("Conexion Cerrada.");
+                modelo.closeConnection();
             } catch (SQLException ex) {
-                Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
+                JDialog dialog = optionPane.createDialog("Error!");
+                dialog.setAlwaysOnTop(true);
+                dialog.setVisible(true);
                 System.out.print("Conexion fallida");
-            }
+                Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
+              }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-            Connection conn;
         try {
-            conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
-            System.out.println("Conexion creada!");
-            Statement st = conn.createStatement();
-            String query = "INSERT INTO clients (nombre, apellido, address, ciudad, telefono1, telefono2, telefono3)"
-                    + "VALUES (?,?,?,?,?,?,?)";
-            PreparedStatement ps = conn.prepareStatement(query);
-            ps.setString(1, nombre.getText());
-            ps.setString(2, apellido.getText());
-            ps.setString(3, direccion.getText());
-            ps.setString(4, ciudad.getText());
-            ps.setString(5, telefono1.getText());
-            ps.setString(6, telefono2.getText());
-            ps.setString(7, telefono3.getText());
-            ps.executeUpdate();
-            System.out.print("Insert exitoso!");
-            conn.close();
-            System.out.println("Conexion cerrada.");
+            modelo.insertClients(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText());
             JOptionPane.showMessageDialog(null, "Creado!");
         } catch (SQLException ex) {
+            JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Error!");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
             Logger.getLogger(manageClients.class.getName()).log(Level.SEVERE, null, ex);
             System.out.print("Conexion fallida");
             ex.printStackTrace();
@@ -443,9 +432,6 @@ public class manageClients extends javax.swing.JDialog {
     }//GEN-LAST:event_nombreActionPerformed
 
     private void buscarNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_buscarNombreKeyTyped
-        
-        
-        
         buscarNombre.addKeyListener(new KeyAdapter() {
 
             @Override
@@ -456,6 +442,10 @@ public class manageClients extends javax.swing.JDialog {
         trs = new TableRowSorter(md);
         tabla.setRowSorter(trs);
     }//GEN-LAST:event_buscarNombreKeyTyped
+
+    private void buscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buscarNombreActionPerformed
 
     public void limpiar(){
         nombre.setText("");

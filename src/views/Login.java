@@ -99,7 +99,7 @@ public class Login extends javax.swing.JFrame {
         String usu = usuario.getText();
         String pas = new String(contrasena.getPassword());
         try {
-            ResultSet rs = modelo.selectUserLogin(usu, pas);
+            ResultSet rs = modelo.selectUser(usu, pas);
 
             if(rs.next()){
                 nameUser = usuario.getText();
