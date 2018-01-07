@@ -28,7 +28,7 @@ public class model {
      * @throws SQLException 
      */
     public void openConnection() throws SQLException{
-        conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
+        conn = DriverManager.getConnection("jdbc:sqlite::resource:db/Dialer.db");
         System.out.println("\nConexion creada!");
     }
     
