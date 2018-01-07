@@ -687,12 +687,20 @@ public class CallScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_addCallBackActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
         nombre.setText((String) iterNombre.next());
         apellido.setText((String) iterApellido.next());
         phone1.setText((String) iterTelefono1.next());
         phone2.setText((String) iterTelefono2.next());
         phone3.setText((String) iterTelefono3.next());
         anotaciones.setText("");
+        } catch (Exception e) {
+            JOptionPane optionPane = new JOptionPane("Usted no dispone de más clientes (Hablar con su supervisor, ra).", JOptionPane.WARNING_MESSAGE);
+            JDialog dialog = optionPane.createDialog(this,"No hay clientes.");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            dialog.setAlwaysOnTop(true);
+        }
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
