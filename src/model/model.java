@@ -29,7 +29,7 @@ public class model {
      */
     public void openConnection() throws SQLException{
         conn = DriverManager.getConnection("jdbc:sqlite:Dialer.db");
-        System.out.println("Conexion creada!");
+        System.out.println("\nConexion creada!");
     }
     
     /**
@@ -61,9 +61,8 @@ public class model {
         ps.setString(8, anotaciones);
         ps.setString(9, description);
         ps.executeUpdate();
-        System.out.println("Insert Exitoso!");
-        conn.close();
-        System.out.println("Conexion cerrada.");
+        System.out.println("\nInsert Exitoso!");
+        this.closeConnection();
     }
     
     /**
@@ -85,7 +84,7 @@ public class model {
      */
     public void closeConnection() throws SQLException{
         conn.close();
-        System.out.println("Conexion Cerrada.");
+        System.out.println("\nConexion Cerrada.");
     }
     /**
      * Este metodo es para logear a los usuarios (Debe de cerrar la conexion a la Db)
@@ -113,8 +112,8 @@ public class model {
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, id);
         ps.executeUpdate();
-        conn.close();
-        System.out.println("Conexion Cerrada.");
+        System.out.println("\nDelete exitoso!");
+        this.closeConnection();
     }
     /**
      * Este metodo es para insertar clientes en la base de datos
@@ -141,9 +140,8 @@ public class model {
         ps.setString(6, telefono2);
         ps.setString(7, telefono3);
         ps.executeUpdate();
-        System.out.print("Insert exitoso!");
-        conn.close();
-        System.out.println("Conexion cerrada.");
+        System.out.println("\nInsert exitoso!");
+        this.closeConnection();
     }
     /**
      * Este método es para darle update a un cliente en especifico (en el parametro Where se puede poner el where igual como en la base de datos).
@@ -171,7 +169,8 @@ public class model {
         ps.setString(6, telefono2);
         ps.setString(7, telefono3);
         ps.executeUpdate();
-        conn.close();
+        System.out.println("\nUpdate exisoto!");
+        this.closeConnection();
     }
     
 }

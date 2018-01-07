@@ -38,6 +38,7 @@ public class manageClients extends javax.swing.JDialog {
     String cabeza[] = {"Id", "Nombres","Apellidos","Dirección","Ciudad","Telefono 1","Telefono 2","Telefono 3"};
     DefaultTableModel md = new DefaultTableModel(data, cabeza);
     model modelo;
+    boolean updateUnexitedClient = false;
     
     public manageClients(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -47,7 +48,7 @@ public class manageClients extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         id.enable(false);
         nombre.requestFocus();
-         modelo = new model();
+        modelo = new model();
         try {
                ResultSet rs = modelo.selectAllClients();
                 ResultSetMetaData rsMd = rs.getMetaData();
@@ -362,13 +363,23 @@ public class manageClients extends javax.swing.JDialog {
             //Borrando el registro que fue modificado (Si le dan a refrescar pueden ver los cambios).
             int fila = tabla.getSelectedRow();
             DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-            model.removeRow(fila);
+            try {
+                model.removeRow(fila);
+            } catch (Exception e) {
+            JOptionPane optionPane = new JOptionPane("No puede modificar un cliente que no existe!", JOptionPane.CANCEL_OPTION);
+            JDialog dialog = optionPane.createDialog("Info");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            updateUnexitedClient = true;
+            }
+            if(!updateUnexitedClient){
             //Llenando el where y haciendo el update
             String where = "id = '"+id.getText()+"'";
             modelo.updateClient(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText(), where);
             //Mensaje de exito.
             JOptionPane.showMessageDialog(null, "Modificado!");
             model.fireTableDataChanged();
+            }
         } catch (SQLException ex) {
             JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
             JDialog dialog = optionPane.createDialog("Error!");
@@ -413,7 +424,7 @@ public class manageClients extends javax.swing.JDialog {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
             modelo.insertClients(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText());
-            JOptionPane.showMessageDialog(null, "Creado!");
+            JOptionPane.showMessageDialog(null, "Cliente Creado! (Presione el boton Refrescar)");
         } catch (SQLException ex) {
             JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
             JDialog dialog = optionPane.createDialog("Error!");
