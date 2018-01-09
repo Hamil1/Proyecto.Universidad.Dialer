@@ -68,19 +68,16 @@ public class CallScreen extends javax.swing.JFrame {
         Date hora = new Date();
 //        this.setUndecorated(false);
         this.setAlwaysOnTop(true);
-        this.setResizable(true);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         this.setVisible(true);
         setLocationRelativeTo(null);
         initComponents();
-//        usuari =  login.obtenerUsuario();
         usuarioLabel.setText(login.nameUser);
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        int xsize = (int) tk.getScreenSize().getWidth();
-        int ysize = (int) tk.getScreenSize().getHeight();
+
 //        Pantalla completa
-          this.setSize(xsize, ysize);
+//        this.setSize(xsize, ysize);
  //       disposalScreen ds = new disposalScreen(this, true);
-            
+          
           modelo = new model();
             
         //Obtener registros
