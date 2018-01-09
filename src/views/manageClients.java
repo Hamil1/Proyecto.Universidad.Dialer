@@ -325,7 +325,7 @@ public class manageClients extends javax.swing.JDialog {
             DefaultTableModel model = (DefaultTableModel) tabla.getModel();
             model.removeRow(fila);
             modelo.deleteClient(id.getText());
-            JOptionPane.showMessageDialog(null, "Eliminado!");
+            JOptionPane.showMessageDialog(this, "Eliminado!");
             //st.executeUpdate("DELETE FROM clients where ")
         } catch (SQLException ex) {
             JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
@@ -382,7 +382,7 @@ public class manageClients extends javax.swing.JDialog {
             }
         } catch (SQLException ex) {
             JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
-            JDialog dialog = optionPane.createDialog("Error!");
+            JDialog dialog = optionPane.createDialog(this,"Error!");
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
             System.out.print("Conexion fallida");
@@ -424,7 +424,7 @@ public class manageClients extends javax.swing.JDialog {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         try {
             modelo.insertClients(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText());
-            JOptionPane.showMessageDialog(null, "Cliente Creado! (Presione el boton Refrescar)");
+            JOptionPane.showMessageDialog(this, "Cliente Creado! (Presione el boton Refrescar)");
         } catch (SQLException ex) {
             JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
             JDialog dialog = optionPane.createDialog("Error!");
