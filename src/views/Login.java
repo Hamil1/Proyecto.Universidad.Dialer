@@ -5,6 +5,7 @@
  */
 package views;
 
+import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -49,13 +50,35 @@ public class Login extends javax.swing.JFrame {
         acceder = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                iniciarSesion(evt);
+            }
+        });
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/dialer-icon.png"))); // NOI18N
+
+        usuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                iniciarSesion(evt);
+            }
+        });
+
+        contrasena.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                iniciarSesion(evt);
+            }
+        });
 
         acceder.setText("Acceder");
         acceder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 accederActionPerformed(evt);
+            }
+        });
+        acceder.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                iniciarSesion(evt);
             }
         });
 
@@ -122,6 +145,12 @@ public class Login extends javax.swing.JFrame {
         
 
     }//GEN-LAST:event_accederActionPerformed
+
+    private void iniciarSesion(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iniciarSesion
+        if(evt.getKeyChar() == KeyEvent.VK_ENTER){
+            acceder.doClick();
+        }
+    }//GEN-LAST:event_iniciarSesion
 
     /**
      * @param args the command line arguments

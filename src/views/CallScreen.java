@@ -69,7 +69,9 @@ public class CallScreen extends javax.swing.JFrame {
 //        this.setUndecorated(false);
         this.setAlwaysOnTop(true);
         this.setVisible(true);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
+        int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
+        setSize(ancho, alto);
         initComponents();
         usuarioLabel.setText(login.nameUser);
 
