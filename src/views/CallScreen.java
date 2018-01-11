@@ -775,7 +775,7 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton manageClient;
     private javax.swing.JTextField nombre;
-    private javax.swing.JTextField phone1;
+    public static javax.swing.JTextField phone1;
     private javax.swing.JTextField phone2;
     private javax.swing.JTextField phone3;
     private javax.swing.JLabel recordid;

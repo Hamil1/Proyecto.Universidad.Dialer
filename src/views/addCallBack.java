@@ -26,6 +26,7 @@ public class addCallBack extends javax.swing.JDialog {
         this.modelo = new model();
         initComponents();
         setLocationRelativeTo(null);
+        CallScreen.phone1.setText("Esto es una prueba");
             
     }
 
