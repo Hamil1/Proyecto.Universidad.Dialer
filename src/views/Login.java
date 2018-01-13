@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import org.sqlite.JDBC;
 import model.model;
@@ -27,11 +28,13 @@ public class Login extends javax.swing.JFrame {
      */
     public static String nameUser = "";
     public model modelo;
+    int counter;
     public Login() {
         initComponents();
         setTitle("Login");
     	setLocationRelativeTo(null);
         modelo = new model();
+        counter = 0;
         
     }
 
@@ -122,6 +125,7 @@ public class Login extends javax.swing.JFrame {
         String usu = usuario.getText();
         String pas = new String(contrasena.getPassword());
         try {
+            
             ResultSet rs = modelo.selectUser(usu, pas);
 
             if(rs.next()){
@@ -137,6 +141,15 @@ public class Login extends javax.swing.JFrame {
                 usuario.requestFocus();
                 usuario.setText("");
                 contrasena.setText("");
+                counter++;
+                if(counter == 3){
+                    JOptionPane optionPane = new JOptionPane("3 intentos fallidos.", JOptionPane.ERROR_MESSAGE);
+                    JDialog dialog = optionPane.createDialog("Intentos fallidos!");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+                    this.dispose();
+                    System.exit(0);
+            }
             }
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Problemas con la conexión");
