@@ -172,5 +172,44 @@ public class model {
         System.out.println("\nUpdate exisoto!");
         this.closeConnection();
     }
+    /**
+     * Este método sirve para traer todos los callbacks guardados por el usuario (se le puede especificar cuales campos queremos que traiga).
+     * @param id
+     * @param nombre
+     * @param apellido
+     * @param address
+     * @param telefono1
+     * @param telefono2
+     * @param telefono3
+     * @param description
+     * @param anotaciones
+     * @return
+     * @throws SQLException 
+     */
+    public ResultSet selectAllCallBacks(boolean id, boolean nombre, boolean apellido, boolean address, boolean telefono1, boolean telefono2, boolean telefono3, boolean description, boolean anotaciones) throws SQLException{
+        this.openConnection();
+        String campos;
+        campos = (id)?"id, ":"";
+        campos += (nombre)?"nombre":"";
+        campos += (apellido)?", ":"";
+        campos += (apellido)?"apellido":"";
+        campos += (address)?", ":"";
+        campos += (address)?"address":"";
+        campos += (telefono1)?", ":"";
+        campos += (telefono1)?"telefono1":"";
+        campos += (telefono2)?", ":"";
+        campos += (telefono2)?"telefono2":"";
+        campos += (telefono3)?", ":"";
+        campos += (telefono3)?"telefono3":"";
+        campos += (description)?", ":"";
+        campos += (description)?"description":"";
+        campos += (anotaciones)?", ":"";
+        campos += (anotaciones)?"anotaciones":"";
+        String query = "SELECT "+campos+" FROM callbacks";
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        return rs;
+        
+    }
     
 }

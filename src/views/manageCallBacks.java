@@ -6,9 +6,15 @@
  */
 package views;
 
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
+import model.model;
 
 /**
  *
@@ -19,21 +25,40 @@ public class manageCallBacks extends javax.swing.JFrame {
     /**
      * Creates new form manageCallBacks
      */
+    
+    model modelo;
     public manageCallBacks() {
-        initComponents();
-        //Cabezera de la tabla
-        String data[][] = {};
-        String cabeza[] = {"Nombre","Apellido","Telefono 1","Telefono 2","Telefono 3", "Descripción","Comentario"};
-        DefaultTableModel md = new DefaultTableModel(data, cabeza);
-        TableColumnModel columna = tabla.getColumnModel();
-        setLocationRelativeTo(null);
-        
-        tabla.setModel(md);
-        tabla.getColumnModel().getColumn(5).setPreferredWidth(200);
-        tabla.getColumnModel().getColumn(6).setPreferredWidth(200);
-        
-        String fila[] = {"Nombre","Apellido","Telefono 1","Telefono 2","Telefono 3", "Descripción del cliente","El cliente me dijo"};
-        md.addRow(fila);
+        try {
+            initComponents();
+            //Cabezera de la tabla
+            String data[][] = {};
+            String cabeza[] = {"Nombre","Apellido","Telefono 1","Telefono 2","Telefono 3", "Descripción","Comentario"};
+            DefaultTableModel md = new DefaultTableModel(data, cabeza);
+            TableColumnModel columna = tabla.getColumnModel();
+            setLocationRelativeTo(null);
+            //Creando el objeto modelo para traer los datos de la Db
+            modelo = new model();
+            
+            ResultSet rs = modelo.selectAllCallBacks(false,true,true,false,true,true,true,true,true);
+            ResultSetMetaData rsMd = rs.getMetaData();
+            int numeroColumnas = rsMd.getColumnCount();
+            
+            while(rs.next()){
+                Object [] fila = new Object[numeroColumnas];
+                for(int i = 0; i < numeroColumnas; i++){
+                    fila [i] = rs.getObject(i + 1);
+                }
+                md.addRow(fila);
+            }
+            modelo.closeConnection();
+            
+            tabla.setModel(md);
+            tabla.getColumnModel().getColumn(5).setPreferredWidth(200);
+            tabla.getColumnModel().getColumn(6).setPreferredWidth(200);
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(manageCallBacks.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
@@ -74,7 +99,7 @@ public class manageCallBacks extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1054, Short.MAX_VALUE)
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(354, 354, 354)
