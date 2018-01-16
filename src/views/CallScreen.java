@@ -265,6 +265,11 @@ public class CallScreen extends javax.swing.JFrame {
 
         viewCallBacks.setText("VIEW CALLBACKS");
         viewCallBacks.setBorder(null);
+        viewCallBacks.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewCallBacksActionPerformed(evt);
+            }
+        });
 
         manageClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/manage_clients.png"))); // NOI18N
         manageClient.setText("MANAGE CLIENT");
@@ -702,6 +707,11 @@ public class CallScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void viewCallBacksActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewCallBacksActionPerformed
+        manageCallBack cb = new manageCallBack(this, true);
+        cb.setVisible(true);
+    }//GEN-LAST:event_viewCallBacksActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -747,8 +757,8 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JLabel Current_time_segs;
     private javax.swing.JLabel Timer;
     private javax.swing.JButton addCallBack;
-    private javax.swing.JTextArea anotaciones;
-    private javax.swing.JTextField apellido;
+    public static javax.swing.JTextArea anotaciones;
+    public static javax.swing.JTextField apellido;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -774,10 +784,10 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton manageClient;
-    private javax.swing.JTextField nombre;
+    public static javax.swing.JTextField nombre;
     public static javax.swing.JTextField phone1;
-    private javax.swing.JTextField phone2;
-    private javax.swing.JTextField phone3;
+    public static javax.swing.JTextField phone2;
+    public static javax.swing.JTextField phone3;
     private javax.swing.JLabel recordid;
     private javax.swing.JLabel recordindfile;
     private javax.swing.JLabel status;

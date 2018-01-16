@@ -1,8 +1,8 @@
 /* 
  Project: Proyecto.Universidad.Dialer
  Package: views
- File: manageCallBacks 
- Created by Hamil on Jan 10, 2018 - 10:50:59 PM. 
+ File: manageCallBack 
+ Created by Hamil on Jan 15, 2018 - 10:52:59 PM. 
  */
 package views;
 
@@ -11,7 +11,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
@@ -21,14 +20,14 @@ import model.model;
  *
  * @author hamil
  */
-public class manageCallBacks extends javax.swing.JFrame {
+public class manageCallBack extends javax.swing.JDialog {
 
     /**
-     * Creates new form manageCallBacks
+     * Creates new form manageCallBack
      */
-    
     model modelo;
-    public manageCallBacks() {
+    public manageCallBack(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
         try {
             initComponents();
             //Cabezera de la tabla
@@ -57,11 +56,9 @@ public class manageCallBacks extends javax.swing.JFrame {
             tabla.getColumnModel().getColumn(5).setPreferredWidth(200);
             tabla.getColumnModel().getColumn(6).setPreferredWidth(200);
             llamar.setToolTipText("Llamar");
-            
         } catch (SQLException ex) {
-            Logger.getLogger(manageCallBacks.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(manageCallBack.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     /**
@@ -78,7 +75,7 @@ public class manageCallBacks extends javax.swing.JFrame {
         tabla = new javax.swing.JTable();
         llamar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Noto Sans", 1, 18)); // NOI18N
         jLabel1.setText("CALL BACKS");
@@ -108,31 +105,25 @@ public class manageCallBacks extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1074, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1054, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(461, 461, 461)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(llamar)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGap(469, 469, 469)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(llamar)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(llamar)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -142,6 +133,12 @@ public class manageCallBacks extends javax.swing.JFrame {
         int i = tabla.getSelectedRow();
         TableModel model = tabla.getModel();
         CallScreen.nombre.setText(model.getValueAt(i, 0).toString());
+        CallScreen.apellido.setText(model.getValueAt(i, 1).toString());
+        CallScreen.phone1.setText(model.getValueAt(i, 2).toString());
+        CallScreen.phone2.setText(model.getValueAt(i, 3).toString());
+        CallScreen.phone3.setText(model.getValueAt(i, 4).toString());
+        CallScreen.anotaciones.setText(model.getValueAt(i, 6).toString());
+        this.setVisible(false);
     }//GEN-LAST:event_llamarActionPerformed
 
     /**
@@ -161,20 +158,27 @@ public class manageCallBacks extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(manageCallBacks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(manageCallBack.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(manageCallBacks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(manageCallBack.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(manageCallBacks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(manageCallBack.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(manageCallBacks.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(manageCallBack.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
-        /* Create and display the form */
+        /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new manageCallBacks().setVisible(true);
+                manageCallBack dialog = new manageCallBack(new javax.swing.JFrame(), true);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
             }
         });
     }
