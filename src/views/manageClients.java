@@ -445,6 +445,8 @@ public class manageClients extends javax.swing.JDialog {
                 JDialog dialog = optionPane.createDialog("Error!");
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);  
+                requiredField = "";
+                required = false;
             }
         } catch (SQLException ex) {
             JOptionPane optionPane = new JOptionPane("Error! Llamar al administrador.", JOptionPane.ERROR_MESSAGE);
