@@ -54,6 +54,7 @@ public class CallScreen extends javax.swing.JFrame {
         ArrayList<String> telefono1DB = new ArrayList<String>();
         ArrayList<String> telefono2DB = new ArrayList<String>();
         ArrayList<String> telefono3DB = new ArrayList<String>();
+        ArrayList<String> cedulaDB = new ArrayList<String>();
         Iterator iterNombre;
         Iterator iterApellido;
         Iterator iterTelefono1;
@@ -84,7 +85,7 @@ public class CallScreen extends javax.swing.JFrame {
         //Obtener registros
         try {
                 
-                ResultSet rs = modelo.selectAllClients();
+                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true);
                 int i = 0;
                 
                 while(rs.next()){
@@ -93,8 +94,9 @@ public class CallScreen extends javax.swing.JFrame {
                 telefono1DB.add(rs.getString("telefono1"));
                 telefono2DB.add(rs.getString("telefono2"));
                 telefono3DB.add(rs.getString("telefono3"));
+                cedulaDB.add(rs.getString("cedula"));
                 }
-//                modelo.closeConnection();
+                modelo.closeConnection();
                 
             } catch (SQLException ex) {
                 Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);

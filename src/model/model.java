@@ -66,14 +66,46 @@ public class model {
     }
     
     /**
-     * Este método se utiliza para traer todos los clientes (Debe de cerrar la conexion a la Db)
-     * @return Clientes
+     * Este método es para traer todos los clientes (Puede especificar cuales campos quiere y debe de cerrar la conexion)
+     * @param id
+     * @param nombre
+     * @param apellido
+     * @param address
+     * @param ciudad
+     * @param telefono1
+     * @param telefono2
+     * @param telefono3
+     * @param cedula
+     * @param datacredito
+     * @param score
+     * @return
      * @throws SQLException 
      */
     
-    public ResultSet selectAllClients() throws SQLException{
+    public ResultSet selectAllClients(boolean id, boolean nombre, boolean apellido, boolean address, boolean ciudad, boolean telefono1, boolean telefono2, boolean telefono3, boolean cedula, boolean datacredito, boolean score) throws SQLException{
         this.openConnection();
-        String query = "SELECT id, nombre, apellido, address, ciudad, telefono1, telefono2, telefono3 FROM clients";
+        String campos;
+        campos = (id)?"id, ":"";
+        campos += (nombre)?"nombre":"";
+        campos += (apellido)?", ":"";
+        campos += (apellido)?"apellido":"";
+        campos += (address)?", ":"";
+        campos += (address)?"address":"";
+        campos += (ciudad)?", ":"";
+        campos += (ciudad)?"ciudad":"";
+        campos += (telefono1)?", ":"";
+        campos += (telefono1)?"telefono1":"";
+        campos += (telefono2)?", ":"";
+        campos += (telefono2)?"telefono2":"";
+        campos += (telefono3)?", ":"";
+        campos += (telefono3)?"telefono3":"";
+        campos += (cedula)?", ":"";
+        campos += (cedula)?"cedula":"";
+        campos += (datacredito)?", ":"";
+        campos += (datacredito)?"datacredito":"";
+        campos += (score)?", ":"";
+        campos += (score)?"score":"";
+        String query = "SELECT "+ campos +" FROM clients";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
         return rs;
