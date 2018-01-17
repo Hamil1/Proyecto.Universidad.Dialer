@@ -284,15 +284,15 @@ public class manageClients extends javax.swing.JDialog {
                             .addComponent(jLabel7)
                             .addComponent(id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
                             .addComponent(nombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(apellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel11)
                             .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -438,7 +438,7 @@ public class manageClients extends javax.swing.JDialog {
             if(direccion.getText().equals("")){required = true; requiredField += (requiredField != "")?" ,Direccion":" Direccion";}
             if(telefono1.getText().equals("")){required = true; requiredField += (requiredField != "")?" ,Telefono 1":" Telefono 1";}
             if(!required){
-                modelo.insertClients(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText());
+                modelo.insertClients(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText(), cedula.getText());
                 JOptionPane.showMessageDialog(this, "Cliente Creado!");
             }else{
                 JOptionPane optionPane = new JOptionPane("Error! Debe de llenar el campo " + requiredField + ".", JOptionPane.ERROR_MESSAGE);
@@ -487,6 +487,7 @@ public class manageClients extends javax.swing.JDialog {
     public void limpiar(){
         nombre.setText("");
         apellido.setText("");
+        cedula.setText("");
         direccion.setText("");
         ciudad.setText("");
         telefono1.setText("");
