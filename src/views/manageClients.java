@@ -205,6 +205,15 @@ public class manageClients extends javax.swing.JDialog {
         jLabel11.setFont(new java.awt.Font("Noto Sans", 1, 14)); // NOI18N
         jLabel11.setText("Cedula");
 
+        cedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                cedulaKeyTyped(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                cedulaKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -483,6 +492,27 @@ public class manageClients extends javax.swing.JDialog {
     private void buscarNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buscarNombreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buscarNombreActionPerformed
+
+    private void cedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaKeyTyped
+        if(cedula.getText().length() > 13){
+            JOptionPane optionPane = new JOptionPane("La cédula no puede tener más de 13 dígitos.", JOptionPane.WARNING_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Alerta!");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+        }
+    }//GEN-LAST:event_cedulaKeyTyped
+
+    private void cedulaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaKeyReleased
+        if(cedula.getText().length() > 13){
+            String texto = cedula.getText();
+            texto = texto.substring(0, texto.length() - 1);
+            JOptionPane optionPane = new JOptionPane("La cédula no puede tener más de 13 dígitos.", JOptionPane.WARNING_MESSAGE);
+            JDialog dialog = optionPane.createDialog("Alerta!");
+            dialog.setAlwaysOnTop(true);
+            dialog.setVisible(true);
+            cedula.setText(texto);
+        }
+    }//GEN-LAST:event_cedulaKeyReleased
 
     public void limpiar(){
         nombre.setText("");

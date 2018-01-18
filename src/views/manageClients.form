@@ -346,6 +346,10 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="cedula">
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cedulaKeyTyped"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="cedulaKeyReleased"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
