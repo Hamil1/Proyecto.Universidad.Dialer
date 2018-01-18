@@ -78,11 +78,12 @@ public class model {
      * @param cedula
      * @param datacredito
      * @param score
+     * @param where
      * @return
      * @throws SQLException 
      */
     
-    public ResultSet selectAllClients(boolean id, boolean nombre, boolean apellido, boolean address, boolean ciudad, boolean telefono1, boolean telefono2, boolean telefono3, boolean cedula, boolean datacredito, boolean score) throws SQLException{
+    public ResultSet selectAllClients(boolean id, boolean nombre, boolean apellido, boolean address, boolean ciudad, boolean telefono1, boolean telefono2, boolean telefono3, boolean cedula, boolean datacredito, boolean score, String where) throws SQLException{
         this.openConnection();
         String campos;
         campos = (id)?"id, ":"";
@@ -105,7 +106,8 @@ public class model {
         campos += (datacredito)?"datacredito":"";
         campos += (score)?", ":"";
         campos += (score)?"score":"";
-        String query = "SELECT "+ campos +" FROM clients";
+        String query = "SELECT "+ campos +" FROM clients " + where;
+        System.out.println("Este es el query: "+query);
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
         return rs;

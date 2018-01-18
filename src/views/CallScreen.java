@@ -75,6 +75,7 @@ public class CallScreen extends javax.swing.JFrame {
         setSize(ancho, alto);
         initComponents();
         usuarioLabel.setText(login.nameUser);
+        String where = "";
 
 //        Pantalla completa
 //        this.setSize(xsize, ysize);
@@ -85,7 +86,7 @@ public class CallScreen extends javax.swing.JFrame {
         //Obtener registros
         try {
                 
-                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true);
+                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true,where);
                 int i = 0;
                 
                 while(rs.next()){

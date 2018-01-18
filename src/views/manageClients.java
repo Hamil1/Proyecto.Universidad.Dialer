@@ -39,7 +39,7 @@ public class manageClients extends javax.swing.JDialog {
     DefaultTableModel md = new DefaultTableModel(data, cabeza);
     model modelo;
     boolean updateUnexitedClient = false, required = false;
-    String requiredField = "";
+    String requiredField = "", where = "";
     
     public manageClients(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -53,7 +53,7 @@ public class manageClients extends javax.swing.JDialog {
         tabla.getColumnModel().getColumn(8).setPreferredWidth(100);
         tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
         try {
-               ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true);
+               ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true,where);
                 ResultSetMetaData rsMd = rs.getMetaData();
                 int numerocolumnas = rsMd.getColumnCount();
                 while(rs.next()){
@@ -347,7 +347,7 @@ public class manageClients extends javax.swing.JDialog {
         tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
         try {
                 
-                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true);
+                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true, where);
                 ResultSetMetaData rsMd = rs.getMetaData();
                 int numerocolumnas = rsMd.getColumnCount();
                 while(rs.next()){
@@ -494,6 +494,8 @@ public class manageClients extends javax.swing.JDialog {
     }//GEN-LAST:event_buscarNombreActionPerformed
 
     private void cedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_cedulaKeyTyped
+        
+        
         if(cedula.getText().length() > 13){
             JOptionPane optionPane = new JOptionPane("La cédula no puede tener más de 13 dígitos.", JOptionPane.WARNING_MESSAGE);
             JDialog dialog = optionPane.createDialog("Alerta!");
@@ -511,6 +513,23 @@ public class manageClients extends javax.swing.JDialog {
             dialog.setAlwaysOnTop(true);
             dialog.setVisible(true);
             cedula.setText(texto);
+        }
+        
+        if(cedula.getText().length() == 13){
+            String where = "WHERE cedula = '"+cedula.getText()+"'";
+            System.out.println("Este es el where: "+where);
+            try {
+                ResultSet rs = modelo.selectAllClients(true, true, true, true, true, true, true, true, true, true, true, where);
+                if(rs.next()){
+                    JOptionPane optionPane = new JOptionPane("Hay un cliente con este número de cédula.", JOptionPane.WARNING_MESSAGE);
+                    JDialog dialog = optionPane.createDialog("Alerta!");
+                    dialog.setAlwaysOnTop(true);
+                    dialog.setVisible(true);
+                }
+                modelo.closeConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(manageClients.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }//GEN-LAST:event_cedulaKeyReleased
 
