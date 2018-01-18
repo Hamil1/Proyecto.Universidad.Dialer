@@ -517,7 +517,6 @@ public class manageClients extends javax.swing.JDialog {
         
         if(cedula.getText().length() == 13){
             String where = "WHERE cedula = '"+cedula.getText()+"'";
-            System.out.println("Este es el where: "+where);
             try {
                 ResultSet rs = modelo.selectAllClients(true, true, true, true, true, true, true, true, true, true, true, where);
                 if(rs.next()){

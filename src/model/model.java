@@ -107,7 +107,6 @@ public class model {
         campos += (score)?", ":"";
         campos += (score)?"score":"";
         String query = "SELECT "+ campos +" FROM clients " + where;
-        System.out.println("Este es el query: "+query);
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
         return rs;
