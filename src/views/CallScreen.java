@@ -221,7 +221,7 @@ public class CallScreen extends javax.swing.JFrame {
 
         jButton3.setText("PARK CALL");
 
-        jButton4.setText("TRANSFER - CONF");
+        jButton4.setText("DATA CREDITO");
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/phone-call.png"))); // NOI18N
         jButton5.setText("HANGUP CUSTOMER");
