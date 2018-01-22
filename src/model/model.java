@@ -206,6 +206,30 @@ public class model {
         System.out.println("\nUpdate exisoto!");
         this.closeConnection();
     }
+    public int updateScore(String cedula) throws SQLException{
+        this.openConnection();
+        int score = 0;
+        
+        Statement st = conn.createStatement();
+        String query = "SELECT score FROM clients WHERE cedula = '"+cedula+"'";
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+            score = rs.getInt("score");
+            System.out.println("Score "+rs.getInt("score"));
+        }
+        this.closeConnection();
+        score -= 5;  
+        this.openConnection();
+        Statement sta = conn.createStatement();
+        query = "UPDATE clients SET score = ? WHERE cedula = '"+cedula+"'";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setInt(1, score);
+        ps.executeUpdate();
+        System.out.println("este es el score nuevo" + score);
+        this.closeConnection();
+        return score;
+        
+    }
     /**
      * Este método sirve para traer todos los callbacks guardados por el usuario (se le puede especificar cuales campos queremos que traiga).
      * @param id

@@ -55,11 +55,7 @@ public class CallScreen extends javax.swing.JFrame {
         ArrayList<String> telefono2DB = new ArrayList<String>();
         ArrayList<String> telefono3DB = new ArrayList<String>();
         ArrayList<String> cedulaDB = new ArrayList<String>();
-        Iterator iterNombre;
-        Iterator iterApellido;
-        Iterator iterTelefono1;
-        Iterator iterTelefono2;
-        Iterator iterTelefono3;
+        Iterator iterNombre, iterApellido, iterTelefono1, iterTelefono2, iterTelefono3, iterCedula;
         //Variables para insertarlas en la tabla de CallBacks (cuando se desee guardan un Call Back)
         public static String nombreStr = null, apellidoStr = null, telefono1Str = null, telefono2Str = null, telefono3Str = null, descriptionStr = null, anotacionesStr = null;
         public model modelo;
@@ -111,11 +107,13 @@ public class CallScreen extends javax.swing.JFrame {
                 iterTelefono1 = telefono1DB.iterator();
                 iterTelefono2 = telefono2DB.iterator();
                 iterTelefono3 = telefono3DB.iterator();
+                iterCedula = cedulaDB.iterator();
                 nombre.setText((String) iterNombre.next());
                 apellido.setText((String) iterApellido.next());
                 phone1.setText((String) iterTelefono1.next());
                 phone2.setText((String) iterTelefono2.next());
                 phone3.setText((String) iterTelefono3.next());
+                cedula.setText((String) iterCedula.next());
                 
                 
     }
@@ -175,6 +173,7 @@ public class CallScreen extends javax.swing.JFrame {
         addCallBack = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         usuarioLabel = new javax.swing.JLabel();
+        cedula = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -222,6 +221,11 @@ public class CallScreen extends javax.swing.JFrame {
         jButton3.setText("PARK CALL");
 
         jButton4.setText("DATA CREDITO");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/phone-call.png"))); // NOI18N
         jButton5.setText("HANGUP CUSTOMER");
@@ -317,6 +321,12 @@ public class CallScreen extends javax.swing.JFrame {
         usuarioLabel.setText("usuario");
         usuarioLabel.setName("usuarioLabel"); // NOI18N
 
+        cedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cedulaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -398,7 +408,9 @@ public class CallScreen extends javax.swing.JFrame {
                                         .addComponent(jButton7))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(387, 387, 387)
-                                        .addComponent(phone2, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cedula)
+                                            .addComponent(phone2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))))))
                         .addGap(0, 282, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -495,9 +507,14 @@ public class CallScreen extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, 23, Short.MAX_VALUE)
                                 .addComponent(jButton1)
                                 .addGap(21, 21, 21)))
-                        .addGap(9, 9, 9)
-                        .addComponent(jButton2)
-                        .addGap(75, 75, 75)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(9, 9, 9)
+                                .addComponent(jButton2))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(cedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(55, 55, 55)
                         .addComponent(jButton4)
                         .addGap(18, 18, 18)
                         .addComponent(jButton5)
@@ -715,6 +732,15 @@ public class CallScreen extends javax.swing.JFrame {
         cb.setVisible(true);
     }//GEN-LAST:event_viewCallBacksActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        datacredito dt = new datacredito(this,true);
+        dt.setVisible(true);
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void cedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cedulaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -762,6 +788,7 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JButton addCallBack;
     public static javax.swing.JTextArea anotaciones;
     public static javax.swing.JTextField apellido;
+    private javax.swing.JTextField cedula;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
