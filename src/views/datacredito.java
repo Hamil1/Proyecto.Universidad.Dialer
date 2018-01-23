@@ -32,6 +32,7 @@ public class datacredito extends javax.swing.JDialog {
         setLocationRelativeTo(null);
         modelo = new model();
         score = 100;
+        cedula.setText(CallScreen.cedulaStr);
     }
 
     /**

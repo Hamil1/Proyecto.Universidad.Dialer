@@ -57,7 +57,7 @@ public class CallScreen extends javax.swing.JFrame {
         ArrayList<String> cedulaDB = new ArrayList<String>();
         Iterator iterNombre, iterApellido, iterTelefono1, iterTelefono2, iterTelefono3, iterCedula;
         //Variables para insertarlas en la tabla de CallBacks (cuando se desee guardan un Call Back)
-        public static String nombreStr = null, apellidoStr = null, telefono1Str = null, telefono2Str = null, telefono3Str = null, descriptionStr = null, anotacionesStr = null;
+        public static String nombreStr = null, apellidoStr = null, telefono1Str = null, telefono2Str = null, telefono3Str = null, descriptionStr = null, anotacionesStr = null, cedulaStr = null;
         public model modelo;
         
     
@@ -717,6 +717,7 @@ public class CallScreen extends javax.swing.JFrame {
         phone1.setText((String) iterTelefono1.next());
         phone2.setText((String) iterTelefono2.next());
         phone3.setText((String) iterTelefono3.next());
+        cedula.setText((String) iterCedula.next());
         anotaciones.setText("");
         } catch (Exception e) {
             JOptionPane optionPane = new JOptionPane("Usted no dispone de más clientes (Hablar con su supervisor, ra).", JOptionPane.WARNING_MESSAGE);
@@ -733,6 +734,7 @@ public class CallScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_viewCallBacksActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        cedulaStr = cedula.getText();
         datacredito dt = new datacredito(this,true);
         dt.setVisible(true);
     }//GEN-LAST:event_jButton4ActionPerformed

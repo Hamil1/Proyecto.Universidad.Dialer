@@ -215,7 +215,6 @@ public class model {
         ResultSet rs = st.executeQuery(query);
         while(rs.next()){
             score = rs.getInt("score");
-            System.out.println("Score "+rs.getInt("score"));
         }
         this.closeConnection();
         score -= 5;  
@@ -225,7 +224,6 @@ public class model {
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setInt(1, score);
         ps.executeUpdate();
-        System.out.println("este es el score nuevo" + score);
         this.closeConnection();
         return score;
         
@@ -247,25 +245,26 @@ public class model {
     public ResultSet selectAllCallBacks(boolean id, boolean nombre, boolean apellido, boolean address, boolean telefono1, boolean telefono2, boolean telefono3, boolean description, boolean anotaciones) throws SQLException{
         this.openConnection();
         String campos;
-        campos = (id)?"id, ":"";
-        campos += (nombre)?"nombre":"";
+        campos = (id)?"cb.id, ":"";
+        campos += (nombre)?"cb.nombre":"";
         campos += (apellido)?", ":"";
-        campos += (apellido)?"apellido":"";
+        campos += (apellido)?"cb.apellido":"";
         campos += (address)?", ":"";
-        campos += (address)?"address":"";
+        campos += (address)?"cb.address":"";
         campos += (telefono1)?", ":"";
-        campos += (telefono1)?"telefono1":"";
+        campos += (telefono1)?"cb.telefono1":"";
         campos += (telefono2)?", ":"";
-        campos += (telefono2)?"telefono2":"";
+        campos += (telefono2)?"cb.telefono2":"";
         campos += (telefono3)?", ":"";
-        campos += (telefono3)?"telefono3":"";
+        campos += (telefono3)?"cb.telefono3":"";
         campos += (description)?", ":"";
-        campos += (description)?"description":"";
+        campos += (description)?"cb.description":"";
         campos += (anotaciones)?", ":"";
-        campos += (anotaciones)?"anotaciones":"";
-        String query = "SELECT "+campos+" FROM callbacks";
+        campos += (anotaciones)?"cb.anotaciones":"";
+        String query = "SELECT "+campos+" FROM callbacks cb INNER JOIN clients as c ON c.cedula = cb.cedula";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
+        System.out.println("Este es el query" + query);
         return rs;
         
     }

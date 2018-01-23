@@ -142,6 +142,7 @@ public class manageCallBacks extends javax.swing.JFrame {
         int i = tabla.getSelectedRow();
         TableModel model = tabla.getModel();
         CallScreen.nombre.setText(model.getValueAt(i, 0).toString());
+        this.dispose();
     }//GEN-LAST:event_llamarActionPerformed
 
     /**
