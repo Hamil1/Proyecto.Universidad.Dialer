@@ -78,11 +78,12 @@ public class CallScreen extends javax.swing.JFrame {
  //       disposalScreen ds = new disposalScreen(this, true);
           
           modelo = new model();
-            
+          //Esta variable es para hacer que solo entre cuando ya se hayan traido los registros de la base de datos y no de indefinido
+          int f = 0;  
         //Obtener registros
         try {
                 
-                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true,where);
+                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,true,where);
                 int i = 0;
                 
                 while(rs.next()){
@@ -92,6 +93,7 @@ public class CallScreen extends javax.swing.JFrame {
                 telefono2DB.add(rs.getString("telefono2"));
                 telefono3DB.add(rs.getString("telefono3"));
                 cedulaDB.add(rs.getString("cedula"));
+                f++;
                 }
                 modelo.closeConnection();
                 
@@ -102,7 +104,8 @@ public class CallScreen extends javax.swing.JFrame {
                 dialog.setAlwaysOnTop(true);
                 dialog.setVisible(true);
             }
-                iterNombre = nombresDB.iterator();
+                if(f > 0){
+                    iterNombre = nombresDB.iterator();
                 iterApellido = apellidosDB.iterator();
                 iterTelefono1 = telefono1DB.iterator();
                 iterTelefono2 = telefono2DB.iterator();
@@ -114,6 +117,7 @@ public class CallScreen extends javax.swing.JFrame {
                 phone2.setText((String) iterTelefono2.next());
                 phone3.setText((String) iterTelefono3.next());
                 cedula.setText((String) iterCedula.next());
+                }
                 
                 
     }

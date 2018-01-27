@@ -76,14 +76,13 @@ public class model {
      * @param telefono2
      * @param telefono3
      * @param cedula
-     * @param datacredito
      * @param score
      * @param where
      * @return
      * @throws SQLException 
      */
     
-    public ResultSet selectAllClients(boolean id, boolean nombre, boolean apellido, boolean address, boolean ciudad, boolean telefono1, boolean telefono2, boolean telefono3, boolean cedula, boolean datacredito, boolean score, String where) throws SQLException{
+    public ResultSet selectAllClients(boolean id, boolean nombre, boolean apellido, boolean address, boolean ciudad, boolean telefono1, boolean telefono2, boolean telefono3, boolean cedula, boolean score, String where) throws SQLException{
         this.openConnection();
         String campos;
         campos = (id)?"id, ":"";
@@ -102,8 +101,6 @@ public class model {
         campos += (telefono3)?"telefono3":"";
         campos += (cedula)?", ":"";
         campos += (cedula)?"cedula":"";
-        campos += (datacredito)?", ":"";
-        campos += (datacredito)?"datacredito":"";
         campos += (score)?", ":"";
         campos += (score)?"score":"";
         String query = "SELECT "+ campos +" FROM clients " + where;

@@ -53,7 +53,7 @@ public class manageClients extends javax.swing.JDialog {
         tabla.getColumnModel().getColumn(8).setPreferredWidth(100);
         tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
         try {
-               ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true,where);
+               ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,true,where);
                 ResultSetMetaData rsMd = rs.getMetaData();
                 int numerocolumnas = rsMd.getColumnCount();
                 while(rs.next()){
@@ -347,7 +347,7 @@ public class manageClients extends javax.swing.JDialog {
         tabla.getColumnModel().getColumn(9).setPreferredWidth(30);
         try {
                 
-                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,false,true, where);
+                ResultSet rs = modelo.selectAllClients(true,true,true,true,true,true,true,true,true,true,where);
                 ResultSetMetaData rsMd = rs.getMetaData();
                 int numerocolumnas = rsMd.getColumnCount();
                 while(rs.next()){
@@ -518,7 +518,7 @@ public class manageClients extends javax.swing.JDialog {
         if(cedula.getText().length() == 13){
             String where = "WHERE cedula = '"+cedula.getText()+"'";
             try {
-                ResultSet rs = modelo.selectAllClients(true, true, true, true, true, true, true, true, true, true, true, where);
+                ResultSet rs = modelo.selectAllClients(true, true, true, true, true, true, true, true, true,true, where);
                 if(rs.next()){
                     JOptionPane optionPane = new JOptionPane("Hay un cliente con este número de cédula.", JOptionPane.WARNING_MESSAGE);
                     JDialog dialog = optionPane.createDialog("Alerta!");
