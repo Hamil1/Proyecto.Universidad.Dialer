@@ -268,5 +268,29 @@ public class model {
         return rs;
         
     }
+    /**
+     * Este metodo es para saber si el usuario con el que estamos logeado es root
+     * @param usuario
+     * @param pas
+     * @return
+     * @throws SQLException 
+     */
+    public boolean isRoot(String usuario) throws SQLException{
+        this.openConnection();
+        int root = 0;
+        boolean condition = false;
+        String query = "SELECT root FROM users WHERE nombre = '"+usuario+"'";
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        while(rs.next()){
+            root = rs.getInt("root");
+        }
+        if(root == 1){
+            condition = true;
+        }else{
+            condition = false;
+        }
+        return condition;
+    }
     
 }

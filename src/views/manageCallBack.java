@@ -138,6 +138,7 @@ public class manageCallBack extends javax.swing.JDialog {
         CallScreen.phone2.setText(model.getValueAt(i, 3).toString());
         CallScreen.phone3.setText(model.getValueAt(i, 4).toString());
         CallScreen.anotaciones.setText(model.getValueAt(i, 6).toString());
+        CallScreen.cedula.setText(model.getValueAt(i, 7).toString());
         this.setVisible(false);
     }//GEN-LAST:event_llamarActionPerformed
 

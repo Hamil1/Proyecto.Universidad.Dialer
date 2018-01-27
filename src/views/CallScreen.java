@@ -59,6 +59,7 @@ public class CallScreen extends javax.swing.JFrame {
         //Variables para insertarlas en la tabla de CallBacks (cuando se desee guardan un Call Back)
         public static String nombreStr = null, apellidoStr = null, telefono1Str = null, telefono2Str = null, telefono3Str = null, descriptionStr = null, anotacionesStr = null, cedulaStr = null;
         public model modelo;
+        boolean root = false;
         
     
     public CallScreen() {
@@ -80,6 +81,15 @@ public class CallScreen extends javax.swing.JFrame {
           modelo = new model();
           //Esta variable es para hacer que solo entre cuando ya se hayan traido los registros de la base de datos y no de indefinido
           int f = 0;  
+            try {
+                root = modelo.isRoot(login.nameUser);
+                if(!root){
+                    reportes.setEnabled(false);
+                    manageClient.setEnabled(false);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
         //Obtener registros
         try {
                 
@@ -144,7 +154,7 @@ public class CallScreen extends javax.swing.JFrame {
         recordid = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        reportes = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
@@ -225,12 +235,12 @@ public class CallScreen extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reportes.png"))); // NOI18N
-        jButton3.setText("REPORTES");
-        jButton3.setToolTipText("REPORTES");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        reportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reportes.png"))); // NOI18N
+        reportes.setText("REPORTES");
+        reportes.setToolTipText("REPORTES");
+        reportes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                reportesActionPerformed(evt);
             }
         });
 
@@ -401,7 +411,7 @@ public class CallScreen extends javax.swing.JFrame {
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(recordid))
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(reportes, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -538,7 +548,7 @@ public class CallScreen extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(228, 228, 228)
-                        .addComponent(jButton3)
+                        .addComponent(reportes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(phone1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -654,15 +664,17 @@ public class CallScreen extends javax.swing.JFrame {
         manageClient.setEnabled(false);
         addCallBack.setEnabled(false);
         viewCallBacks.setEnabled(false);
+        reportes.setEnabled(false);
     }
     
     public void activeButtons(){
         jButton8.setEnabled(true);
         jButton7.setEnabled(true);
         jButton9.setEnabled(true);
-        manageClient.setEnabled(true);
+        if(root){manageClient.setEnabled(true);}
         addCallBack.setEnabled(true);
         viewCallBacks.setEnabled(true);
+        if(root){reportes.setEnabled(true);}
     }
     
     public void resetTimer(){
@@ -761,9 +773,10 @@ public class CallScreen extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cedulaActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    private void reportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reportesActionPerformed
+        chooseReport cr = new chooseReport(this, true);
+        cr.setVisible(true);
+    }//GEN-LAST:event_reportesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -812,10 +825,9 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JButton addCallBack;
     public static javax.swing.JTextArea anotaciones;
     public static javax.swing.JTextField apellido;
-    private javax.swing.JTextField cedula;
+    public static javax.swing.JTextField cedula;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     public javax.swing.JButton jButton6;
@@ -844,6 +856,7 @@ public class CallScreen extends javax.swing.JFrame {
     public static javax.swing.JTextField phone3;
     private javax.swing.JLabel recordid;
     private javax.swing.JLabel recordindfile;
+    private javax.swing.JButton reportes;
     private javax.swing.JLabel status;
     private javax.swing.JLabel usuarioLabel;
     private javax.swing.JButton viewCallBacks;
