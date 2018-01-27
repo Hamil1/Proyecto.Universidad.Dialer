@@ -217,7 +217,8 @@ public class CallScreen extends javax.swing.JFrame {
         });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/solicitud.png"))); // NOI18N
-        jButton2.setText("SOLICITAR CREDITO");
+        jButton2.setText("SOLICITUD");
+        jButton2.setToolTipText("SOLICITAR CREDITO");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
