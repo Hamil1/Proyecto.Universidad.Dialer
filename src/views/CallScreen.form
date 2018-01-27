@@ -96,8 +96,8 @@
                               <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="manageClient" min="-2" pref="158" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="218" max="-2" attributes="0"/>
+                              <Component id="manageClient" max="32767" attributes="0"/>
+                              <EmptySpace min="-2" pref="236" max="-2" attributes="0"/>
                               <Component id="jScrollPane1" min="-2" pref="528" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -124,7 +124,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace min="0" pref="282" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="282" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -370,7 +370,8 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/microphone.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="START RECORDING"/>
+        <Property name="text" type="java.lang.String" value="GRABAR LLAMADA"/>
+        <Property name="toolTipText" type="java.lang.String" value="GRABAR LLAMADA"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
@@ -378,7 +379,10 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="WEB FORM"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/solicitud.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="SOLICITAR CREDITO"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
@@ -386,12 +390,23 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton3">
       <Properties>
-        <Property name="text" type="java.lang.String" value="PARK CALL"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/reportes.png"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="REPORTES"/>
+        <Property name="toolTipText" type="java.lang.String" value="REPORTES"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton4">
       <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/search.png"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="DATA CREDITO"/>
+        <Property name="toolTipText" type="java.lang.String" value="DATA CREDITO"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
@@ -402,7 +417,8 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/phone-call.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="HANGUP CUSTOMER"/>
+        <Property name="text" type="java.lang.String" value="CERRAR LLAMADA"/>
+        <Property name="toolTipText" type="java.lang.String" value="CERRAR LLAMADA"/>
         <Property name="name" type="java.lang.String" value="hang" noResource="true"/>
       </Properties>
       <Events>
@@ -515,7 +531,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/images/manage_clients.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="MANAGE CLIENT"/>
+        <Property name="text" type="java.lang.String" value="VER CLIENTES"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manageClientActionPerformed"/>

@@ -423,7 +423,7 @@ public class manageClients extends javax.swing.JDialog {
             if(!updateUnexitedClient){
             //Llenando el where y haciendo el update
             String where = "id = '"+id.getText()+"'";
-            modelo.updateClient(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText(), where);
+            modelo.updateClient(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText(), cedula.getText(), where);
             //Mensaje de exito.
             JOptionPane.showMessageDialog(null, "Modificado!");
             model.fireTableDataChanged();

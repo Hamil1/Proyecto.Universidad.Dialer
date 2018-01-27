@@ -186,10 +186,10 @@ public class model {
      * @param where
      * @throws SQLException 
      */
-    public void updateClient(String nombre,String apellido,String direccion,String ciudad,String telefono1,String telefono2,String telefono3, String where) throws SQLException{
+    public void updateClient(String nombre,String apellido,String direccion,String ciudad,String telefono1,String telefono2,String telefono3, String cedula, String where) throws SQLException{
         this.openConnection();
         Statement st = conn.createStatement();
-        String query = "UPDATE clients SET nombre = ?, apellido = ?, address = ?, ciudad = ?, telefono1 = ?, telefono2 = ?, telefono3 = ?"
+        String query = "UPDATE clients SET nombre = ?, apellido = ?, address = ?, ciudad = ?, telefono1 = ?, telefono2 = ?, telefono3 = ?, cedula = ?"
                     + " WHERE "+where;
         PreparedStatement ps = conn.prepareStatement(query);
         ps.setString(1, nombre);
@@ -199,6 +199,7 @@ public class model {
         ps.setString(5, telefono1);
         ps.setString(6, telefono2);
         ps.setString(7, telefono3);
+        ps.setString(8, cedula);
         ps.executeUpdate();
         System.out.println("\nUpdate exisoto!");
         this.closeConnection();
@@ -261,7 +262,6 @@ public class model {
         String query = "SELECT "+campos+" FROM callbacks cb INNER JOIN clients as c ON c.cedula = cb.cedula";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
-        System.out.println("Este es el query" + query);
         return rs;
         
     }

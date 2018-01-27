@@ -68,7 +68,7 @@ public class CallScreen extends javax.swing.JFrame {
         this.setVisible(true);
         int ancho = java.awt.Toolkit.getDefaultToolkit().getScreenSize().width;
         int alto = java.awt.Toolkit.getDefaultToolkit().getScreenSize().height;
-        setSize(ancho, alto);
+        //setSize(ancho / 2, alto / 2);
         initComponents();
         usuarioLabel.setText(login.nameUser);
         String where = "";
@@ -208,23 +208,34 @@ public class CallScreen extends javax.swing.JFrame {
         jLabel10.setText("RECORD ID:");
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/microphone.png"))); // NOI18N
-        jButton1.setText("START RECORDING");
+        jButton1.setText("GRABAR LLAMADA");
+        jButton1.setToolTipText("GRABAR LLAMADA");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jButton2.setText("WEB FORM");
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/solicitud.png"))); // NOI18N
+        jButton2.setText("SOLICITAR CREDITO");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
 
-        jButton3.setText("PARK CALL");
+        jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reportes.png"))); // NOI18N
+        jButton3.setText("REPORTES");
+        jButton3.setToolTipText("REPORTES");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/search.png"))); // NOI18N
         jButton4.setText("DATA CREDITO");
+        jButton4.setToolTipText("DATA CREDITO");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -232,7 +243,8 @@ public class CallScreen extends javax.swing.JFrame {
         });
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/phone-call.png"))); // NOI18N
-        jButton5.setText("HANGUP CUSTOMER");
+        jButton5.setText("CERRAR LLAMADA");
+        jButton5.setToolTipText("CERRAR LLAMADA");
         jButton5.setName("hang"); // NOI18N
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -283,7 +295,7 @@ public class CallScreen extends javax.swing.JFrame {
         });
 
         manageClient.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/manage_clients.png"))); // NOI18N
-        manageClient.setText("MANAGE CLIENT");
+        manageClient.setText("VER CLIENTES");
         manageClient.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 manageClientActionPerformed(evt);
@@ -396,8 +408,8 @@ public class CallScreen extends javax.swing.JFrame {
                                 .addGap(429, 429, 429)
                                 .addComponent(jLabel13))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(manageClient, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(218, 218, 218)
+                                .addComponent(manageClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(236, 236, 236)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -415,7 +427,7 @@ public class CallScreen extends javax.swing.JFrame {
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(cedula)
                                             .addComponent(phone2, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))))))
-                        .addGap(0, 282, Short.MAX_VALUE))
+                        .addGap(282, 282, 282))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jRadioButton1)
@@ -746,6 +758,10 @@ public class CallScreen extends javax.swing.JFrame {
     private void cedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cedulaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cedulaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
