@@ -723,6 +723,7 @@ public class CallScreen extends javax.swing.JFrame {
         telefono2Str = phone2.getText();
         telefono3Str = phone3.getText();
         anotacionesStr = anotaciones.getText();
+        cedulaStr = cedula.getText();
         addCallBack addc = new addCallBack(this, true);
         addc.setVisible(true);
     }//GEN-LAST:event_addCallBackActionPerformed

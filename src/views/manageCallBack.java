@@ -32,14 +32,14 @@ public class manageCallBack extends javax.swing.JDialog {
             initComponents();
             //Cabezera de la tabla
             String data[][] = {};
-            String cabeza[] = {"Nombre","Apellido","Telefono 1","Telefono 2","Telefono 3", "Descripción","Comentario"};
+            String cabeza[] = {"Nombre","Apellido","Telefono 1","Telefono 2","Telefono 3", "Descripción","Comentario","Cedula"};
             DefaultTableModel md = new DefaultTableModel(data, cabeza);
             TableColumnModel columna = tabla.getColumnModel();
             setLocationRelativeTo(null);
             //Creando el objeto modelo para traer los datos de la Db
             modelo = new model();
             
-            ResultSet rs = modelo.selectAllCallBacks(false,true,true,false,true,true,true,true,true);
+            ResultSet rs = modelo.selectAllCallBacks(false,true,true,false,true,true,true,true,true,true);
             ResultSetMetaData rsMd = rs.getMetaData();
             int numeroColumnas = rsMd.getColumnCount();
             

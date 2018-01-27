@@ -425,7 +425,7 @@ public class manageClients extends javax.swing.JDialog {
             String where = "id = '"+id.getText()+"'";
             modelo.updateClient(nombre.getText(), apellido.getText(), direccion.getText(), ciudad.getText(), telefono1.getText(), telefono2.getText(), telefono3.getText(), cedula.getText(), where);
             //Mensaje de exito.
-            JOptionPane.showMessageDialog(null, "Modificado!");
+            JOptionPane.showMessageDialog(this, "Modificado!");
             model.fireTableDataChanged();
             }
         } catch (SQLException ex) {

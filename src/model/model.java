@@ -45,11 +45,11 @@ public class model {
      * @param description
      * @throws SQLException 
      */
-    public void insertCallBacks(String nombre, String apellido, String address, String ciudad, String telefono1, String telefono2, String telefono3,String anotaciones, String description) throws SQLException{
+    public void insertCallBacks(String nombre, String apellido, String address, String ciudad, String telefono1, String telefono2, String telefono3,String anotaciones, String description, String cedula) throws SQLException{
         this.openConnection();
         st = conn.createStatement();
-        query = "INSERT INTO callbacks (nombre, apellido, address, ciudad, telefono1, telefono2, telefono3, anotaciones, description)"
-                    + "VALUES (?,?,?,?,?,?,?,?,?)";
+        query = "INSERT INTO callbacks (nombre, apellido, address, ciudad, telefono1, telefono2, telefono3, anotaciones, description, cedula)"
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?)";
         ps = conn.prepareStatement(query);
         ps.setString(1, nombre);
         ps.setString(2, apellido);
@@ -60,6 +60,7 @@ public class model {
         ps.setString(7, telefono3);
         ps.setString(8, anotaciones);
         ps.setString(9, description);
+        ps.setString(10, cedula);
         ps.executeUpdate();
         System.out.println("\nInsert Exitoso!");
         this.closeConnection();
@@ -240,7 +241,7 @@ public class model {
      * @return
      * @throws SQLException 
      */
-    public ResultSet selectAllCallBacks(boolean id, boolean nombre, boolean apellido, boolean address, boolean telefono1, boolean telefono2, boolean telefono3, boolean description, boolean anotaciones) throws SQLException{
+    public ResultSet selectAllCallBacks(boolean id, boolean nombre, boolean apellido, boolean address, boolean telefono1, boolean telefono2, boolean telefono3, boolean description, boolean anotaciones, boolean cedula) throws SQLException{
         this.openConnection();
         String campos;
         campos = (id)?"cb.id, ":"";
@@ -259,6 +260,8 @@ public class model {
         campos += (description)?"cb.description":"";
         campos += (anotaciones)?", ":"";
         campos += (anotaciones)?"cb.anotaciones":"";
+        campos += (cedula)?", ":"";
+        campos += (cedula)?"cb.cedula":"";
         String query = "SELECT "+campos+" FROM callbacks cb INNER JOIN clients as c ON c.cedula = cb.cedula";
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);

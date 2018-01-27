@@ -99,7 +99,7 @@ public class addCallBack extends javax.swing.JDialog {
         
         this.descripcion = description.getText();
             try {
-                modelo.insertCallBacks(CallScreen.nombreStr,CallScreen.apellidoStr,null,null,CallScreen.telefono1Str,CallScreen.telefono2Str,CallScreen.telefono3Str,CallScreen.anotacionesStr,this.descripcion);
+                modelo.insertCallBacks(CallScreen.nombreStr,CallScreen.apellidoStr,null,null,CallScreen.telefono1Str,CallScreen.telefono2Str,CallScreen.telefono3Str,CallScreen.anotacionesStr,this.descripcion, CallScreen.cedulaStr);
             } catch (SQLException ex) {
                 //JOptionPane.showMessageDialog(null, "Error! No se pudo guardar el CallBack (Llamar al administrador).","Error", JOptionPane.ERROR_MESSAGE);
                 JOptionPane optionPane = new JOptionPane("Error! No se pudo guardar el CallBack (Llamar al administrador).", JOptionPane.ERROR_MESSAGE);
