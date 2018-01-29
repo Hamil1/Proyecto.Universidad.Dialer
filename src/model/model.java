@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 
 /**
  *
@@ -291,6 +292,39 @@ public class model {
             condition = false;
         }
         return condition;
+    }
+    
+    public void logUser(String user) throws SQLException{
+        Date fecha = new Date();
+        this.openConnection();
+        Statement st = conn.createStatement();
+        String query = "INSERT INTO users_log (nombre, fecha_hora)"
+                + "VALUES (?,?)";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, user);
+        
+        this.closeConnection();
+    }
+    
+    public ResultSet selectAllUsers() throws SQLException{
+        this.openConnection();
+        String query = "SELECT nombre, contrasena FROM users";
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        return rs;
+    }
+    
+    public void insertUser(String nombre, String contrasena) throws SQLException{
+        this.openConnection();
+        Statement st = conn.createStatement();
+        String query = "INSERT INTO users (nombre, contrasena)"
+                + "VALUES (?,?)";
+        PreparedStatement ps = conn.prepareStatement(query);
+        ps.setString(1, nombre);
+        ps.setString(2, contrasena);
+        ps.executeUpdate();
+        System.out.println("\nInsert exitoso!");
+        this.closeConnection();
     }
     
 }

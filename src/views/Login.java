@@ -156,14 +156,10 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Problemas con la conexión");
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-
     }//GEN-LAST:event_accederActionPerformed
 
     private void iniciarSesion(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_iniciarSesion
-        if(evt.getKeyChar() == KeyEvent.VK_ENTER){
-            acceder.doClick();
-        }
+        
     }//GEN-LAST:event_iniciarSesion
 
     /**

@@ -73,6 +73,7 @@ public class CallScreen extends javax.swing.JFrame {
         initComponents();
         usuarioLabel.setText(login.nameUser);
         String where = "";
+            
 
 //        Pantalla completa
 //        this.setSize(xsize, ysize);
@@ -86,6 +87,7 @@ public class CallScreen extends javax.swing.JFrame {
                 if(!root){
                     reportes.setEnabled(false);
                     manageClient.setEnabled(false);
+                    verUsuarios.setEnabled(false);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(CallScreen.class.getName()).log(Level.SEVERE, null, ex);
@@ -188,6 +190,7 @@ public class CallScreen extends javax.swing.JFrame {
         jButton6 = new javax.swing.JButton();
         usuarioLabel = new javax.swing.JLabel();
         cedula = new javax.swing.JTextField();
+        verUsuarios = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -354,6 +357,14 @@ public class CallScreen extends javax.swing.JFrame {
             }
         });
 
+        verUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/usuario.png"))); // NOI18N
+        verUsuarios.setText("VER USUARIOS");
+        verUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                verUsuariosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -419,7 +430,9 @@ public class CallScreen extends javax.swing.JFrame {
                                 .addGap(429, 429, 429)
                                 .addComponent(jLabel13))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(manageClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(verUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(manageClient, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(236, 236, 236)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 528, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
@@ -565,8 +578,10 @@ public class CallScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
+                        .addGap(18, 18, 18)
                         .addComponent(manageClient)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(verUsuarios)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -778,6 +793,11 @@ public class CallScreen extends javax.swing.JFrame {
         cr.setVisible(true);
     }//GEN-LAST:event_reportesActionPerformed
 
+    private void verUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_verUsuariosActionPerformed
+        manageUsers mu = new manageUsers(this, true);
+        mu.setVisible(true);
+    }//GEN-LAST:event_verUsuariosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -859,6 +879,7 @@ public class CallScreen extends javax.swing.JFrame {
     private javax.swing.JButton reportes;
     private javax.swing.JLabel status;
     private javax.swing.JLabel usuarioLabel;
+    private javax.swing.JButton verUsuarios;
     private javax.swing.JButton viewCallBacks;
     // End of variables declaration//GEN-END:variables
 }
